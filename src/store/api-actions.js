@@ -8,8 +8,8 @@ import {
 
 import {APIRoute, AppRoute} from '../const';
 
-export const fetchBooksList = () => (dispatch, _getState, api) => (
-  api.get(APIRoute.BOOKS)
+export const fetchOrdersList = () => (dispatch, _getState, api) => (
+  api.get(APIRoute.ORDERS)
     .then(({data}) => {
       dispatch(loadBooksAction(data));
     })
@@ -17,7 +17,7 @@ export const fetchBooksList = () => (dispatch, _getState, api) => (
 );
 
 export const addToFavoriteApi = (id, isFavorite) => (dispatch, _getState, api) => (
-  api.patch(`${ APIRoute.BOOKS }/${ id }`, {favorite: isFavorite})
+  api.patch(`${ APIRoute.ORDERS }/${ id }`, {favorite: isFavorite})
     .then((info) => {
       dispatch(changeFavoriteAction(id, info.data.favorite));
     })
@@ -25,17 +25,17 @@ export const addToFavoriteApi = (id, isFavorite) => (dispatch, _getState, api) =
 );
 
 export const deleteItemApi = (id) => (dispatch, _getState, api) => (
-  api.delete(`${ APIRoute.BOOKS }/${ id}`)
+  api.delete(`${ APIRoute.ORDERS }/${ id}`)
     .then((info) => {
       dispatch(deleteItemAction(id));
     })
     .catch((err) => {})
 );
 
-export const addNewBookApi = (book) => (dispatch, _getState, api) => {
+export const addNewOrderApi = (book) => (dispatch, _getState, api) => {
   // dispatch(changeLoadingCommentProcessStatus(true));
   // console.log(book);
-  api.post(`${ APIRoute.BOOKS }`, {
+  api.post(`${ APIRoute.ORDERS }`, {
     "favorite": false,
     "author": "Jack London",
     "group": "Fantasy",

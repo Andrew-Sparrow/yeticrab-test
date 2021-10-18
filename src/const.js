@@ -16,7 +16,6 @@ export const groupNames = {
 }
 
 export const APIRoute = {
-  BOOKS: '/books',
+  ORDERS: '/orders',
   FAVORITE: 'favorite',
-  GROUPS: '/groups',
 };

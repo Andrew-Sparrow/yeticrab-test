@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BACKEND_URL = 'https://jetstyle-api.herokuapp.com';
+const BACKEND_URL = 'https://heroku-yeticrab-api.herokuapp.com';
 const REQUEST_TIMEOUT = 5000;
 
 export const getAxiosInstance = () => {

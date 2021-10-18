@@ -3,7 +3,7 @@ import {useDispatch} from 'react-redux';
 
 import withLayout from '../hocs/with-layout';
 import SubmitButton from '../submit-button/submit-button';
-import {addNewBookApi} from '../../store/api-actions';
+import {addNewOrderApi} from '../../store/api-actions';
 
 const NewBookForm = (props) => {
   const dispatch = useDispatch();
@@ -17,7 +17,7 @@ const NewBookForm = (props) => {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    dispatch(addNewBookApi());
+    dispatch(addNewOrderApi());
   };
 
   return (
