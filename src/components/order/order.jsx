@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {useDispatch} from 'react-redux';
 import {Link} from 'react-router-dom';
-import {Route} from 'react-router-dom';
 
 import {addToFavoriteApi, deleteItemApi} from '../../store/api-actions';
 

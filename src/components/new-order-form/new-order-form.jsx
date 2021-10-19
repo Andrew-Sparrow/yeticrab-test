@@ -8,16 +8,30 @@ import {addNewOrderApi} from '../../store/api-actions';
 const NewBookForm = (props) => {
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
-    title: '',
-    author: '',
-    cover: '',
-    group: '',
-    favorite: false
+    'company': '',
+    'first_name': '',
+    'middle_name': '',
+    'last_name': '',
+    'phone': '',
+    'comment': '',
+    'ati': '',
+    'favorite': false
   });
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    dispatch(addNewOrderApi());
+    dispatch(addNewOrderApi(formData));
+  };
+
+  const handleInputChange = (evt) => {
+    const target = evt.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+
+    setFormData({
+      ...formData,
+      [name]: value
+    });
   };
 
   return (
@@ -36,66 +50,66 @@ const NewBookForm = (props) => {
               <label className="reviews__label form__label" htmlFor="title">Company</label>
               <input
                 className="reviews__textarea form__textarea"
-                onChange={() => {}}
-                id="title"
-                value={''}
-                name="title"
+                onChange={handleInputChange}
+                id="company"
+                value={formData.company}
+                name="company"
               />
               <label className="reviews__label form__label" htmlFor="first_name">Carrier First Name</label>
               <input
                 className="reviews__textarea form__textarea"
-                onChange={() => {}}
+                onChange={handleInputChange}
                 id="first_name"
-                value={''}
+                value={formData.first_name}
                 name="first_name"
               />
               <label className="reviews__label form__label" htmlFor="middle_name">Carrier Middle Name</label>
               <input
                 className="reviews__textarea form__textarea"
-                onChange={() => {}}
+                onChange={handleInputChange}
                 id="middle_name"
-                value={''}
+                value={formData.middle_name}
                 name="middle_name"
               />
               <label className="reviews__label form__label" htmlFor="middle_name">Carrier Last Name</label>
               <input
                 className="reviews__textarea form__textarea"
-                onChange={() => {}}
+                onChange={handleInputChange}
                 id="last_name"
-                value={''}
+                value={formData.last_name}
                 name="last_name"
               />
               <label className="reviews__label form__label" htmlFor="phone">Phone</label>
               <input
                 className="reviews__textarea form__textarea"
-                onChange={() => {}}
+                onChange={handleInputChange}
                 id="phone"
-                value={''}
+                value={formData.phone}
                 name="phone"
               />
               <label className="reviews__label form__label" htmlFor="comment">Comment</label>
               <input
                 className="reviews__textarea form__textarea"
-                onChange={() => {}}
+                onChange={handleInputChange}
                 id="comment"
-                value={''}
+                value={formData.comment}
                 name="comment"
               />
               <label className="reviews__label form__label" htmlFor="comment">ATI Code</label>
               <input
                 className="reviews__textarea form__textarea"
-                onChange={() => {}}
+                onChange={handleInputChange}
                 id="ati"
-                value={''}
+                value={formData.ati}
                 name="ati"
               />
               <label className="reviews__label form__label" htmlFor="favorite">Favorite</label>
               <input
                 className="form__favorite"
                 type="checkbox"
-                onChange={() => {}}
+                onChange={handleInputChange}
                 id="favorite"
-                value={''}
+                checked={formData.favorite}
                 name="favorite"
               />
               <SubmitButton/>

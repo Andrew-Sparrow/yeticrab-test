@@ -32,15 +32,19 @@ export const deleteItemApi = (id) => (dispatch, _getState, api) => (
     .catch((err) => {})
 );
 
-export const addNewOrderApi = (book) => (dispatch, _getState, api) => {
+export const addNewOrderApi = (order) => (dispatch, _getState, api) => {
   // dispatch(changeLoadingCommentProcessStatus(true));
-  // console.log(book);
+  console.log(order);
   api.post(`${ APIRoute.ORDERS }`, {
-    "favorite": false,
-    "author": "Jack London",
-    "group": "Fantasy",
-    "img": null,
-    "title": "React"
+    "date": new Date().toJSON,
+    "company": order.company,
+    "carrier_first_name": order.first_name,
+    "carrier_middle_name": order.middle_name,
+    "carrier_last_name": order.last_name,
+    "phone": order.phone,
+    "comment": order.comment,
+    "ati": order.ati,
+    "favorite": order.favorite
   })
     .then((info) => {
       dispatch(addNewBookAction(info.data));
