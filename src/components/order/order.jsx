@@ -1,18 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {useDispatch} from 'react-redux';
+import {Link} from 'react-router-dom';
+import {Route} from 'react-router-dom';
 
-import {defaultImg} from '../../const';
 import {addToFavoriteApi, deleteItemApi} from '../../store/api-actions';
 
-function Book(props) {
+function Order(props) {
   const {
     id,
-    title,
-    author,
-    group,
-    img,
-    favorite
+    company,
+    date,
+    carrierFirstName,
+    carrierMiddleName,
+    carrierLastName,
+    favorite,
+    phone,
+    comment,
+    ati
   } = props;
 
   const dispatch = useDispatch();
@@ -31,11 +36,15 @@ function Book(props) {
       className="contact"
       id={id}
     >
-      <img className="contact__left" src={img === null ? defaultImg : img} alt="avatar"></img>
       <div className="contact__right">
-        <p className="contact__data">Book Title: <span className="contact__name">{title}</span></p>
-        <p className="contact__data">Author: <span className="contact__name">{author}</span></p>
-        <p className="contact__data">Group: <span className="contact__name">{group}</span></p>
+        <p className="contact__data">Company: <span className="contact__name">{company}</span></p>
+        <p className="contact__data">Date: <span className="contact__name">{new Date(date).toDateString()}</span></p>
+        <p className="contact__data">Carrier First Name: <span className="contact__name">{carrierFirstName}</span></p>
+        <p className="contact__data">Carrier Middle Name: <span className="contact__name">{carrierMiddleName}</span></p>
+        <p className="contact__data">Carrier Last Name: <span className="contact__name">{carrierLastName}</span></p>
+        <p className="contact__data">Phone: <span className="contact__name">{phone}</span></p>
+        <p className="contact__data">Comment: <span className="contact__name">{comment}</span></p>
+        <p className="contact__data">ATI: <Link to={{pathname: `https://ati.su/firms/${ ati }/info`}} target="_blank" >{`https://ati.su/firms/${ ati }/info`}</Link></p>
       </div>
       <div className="contact__buttons">
         <button className="contact__bookmark-button button" type="button" onClick={onFavoriteClick}>
@@ -61,15 +70,9 @@ function Book(props) {
   );
 }
 
-Book.propTypes = {
+Order.propTypes = {
   'id': PropTypes.number.isRequired,
-  'title': PropTypes.string.isRequired,
-  'author': PropTypes.string.isRequired,
-  "img": PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.oneOf([null]),
-  ]),
-  "group": PropTypes.string,
+  'company': PropTypes.string.isRequired,
 };
 
-export default Book;
+export default Order;

@@ -24,8 +24,8 @@ const NewBookForm = (props) => {
     <div className="cities">
       <div className="cities__places-container container">
         <section className="cities__places form">
-          <h2 className="visually-hidden">Books</h2>
-          <h2 className="form__title">Add New Book</h2>
+          <h2 className="visually-hidden">Order</h2>
+          <h2 className="form__title">Add New Order</h2>
           <fieldset disabled={false} style={{border: 'none'}}>
             <form
               className="reviews__form form"
@@ -33,7 +33,7 @@ const NewBookForm = (props) => {
               method="post"
               onSubmit={handleSubmit}
             >
-              <label className="reviews__label form__label" htmlFor="title">Title</label>
+              <label className="reviews__label form__label" htmlFor="title">Company</label>
               <input
                 className="reviews__textarea form__textarea"
                 onChange={() => {}}
@@ -41,22 +41,54 @@ const NewBookForm = (props) => {
                 value={''}
                 name="title"
               />
-              <label className="reviews__label form__label" htmlFor="author">Author</label>
+              <label className="reviews__label form__label" htmlFor="first_name">Carrier First Name</label>
               <input
                 className="reviews__textarea form__textarea"
                 onChange={() => {}}
-                id="author"
+                id="first_name"
                 value={''}
-                name="author"
+                name="first_name"
               />
-              <label className="reviews__label form__label" htmlFor="cover">Cover</label>
+              <label className="reviews__label form__label" htmlFor="middle_name">Carrier Middle Name</label>
               <input
                 className="reviews__textarea form__textarea"
                 onChange={() => {}}
-                id="cover"
+                id="middle_name"
                 value={''}
-                name="cover"
-            />
+                name="middle_name"
+              />
+              <label className="reviews__label form__label" htmlFor="middle_name">Carrier Last Name</label>
+              <input
+                className="reviews__textarea form__textarea"
+                onChange={() => {}}
+                id="last_name"
+                value={''}
+                name="last_name"
+              />
+              <label className="reviews__label form__label" htmlFor="phone">Phone</label>
+              <input
+                className="reviews__textarea form__textarea"
+                onChange={() => {}}
+                id="phone"
+                value={''}
+                name="phone"
+              />
+              <label className="reviews__label form__label" htmlFor="comment">Comment</label>
+              <input
+                className="reviews__textarea form__textarea"
+                onChange={() => {}}
+                id="comment"
+                value={''}
+                name="comment"
+              />
+              <label className="reviews__label form__label" htmlFor="comment">ATI Code</label>
+              <input
+                className="reviews__textarea form__textarea"
+                onChange={() => {}}
+                id="ati"
+                value={''}
+                name="ati"
+              />
               <label className="reviews__label form__label" htmlFor="favorite">Favorite</label>
               <input
                 className="form__favorite"
@@ -64,17 +96,8 @@ const NewBookForm = (props) => {
                 onChange={() => {}}
                 id="favorite"
                 value={''}
-                name="cover"
+                name="favorite"
               />
-              <label className="reviews__label form__label" htmlFor="genre">Genre</label>
-              <select
-                className="form__genre"
-                id="genre"
-              >
-                <option value="">--Please choose an option--</option>
-                <option value="dog">Dog</option>
-                <option value="cat">Cat</option>
-              </select>
               <SubmitButton/>
             </form>
           </fieldset>

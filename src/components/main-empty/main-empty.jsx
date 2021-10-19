@@ -12,8 +12,8 @@ function MainEmpty(props) {
         <section className="cities__no-places">
           <NewItemButton />
           <div className="cities__status-wrapper tabs__content">
-            <b className="cities__status">No books available</b>
-            <p className="cities__status-description">We could not find any books available at the moment in "{activeGroupName}" group</p>
+            <b className="cities__status">No orders available</b>
+            <p className="cities__status-description">We could not find any orders available at the moment in "{activeGroupName}" group</p>
           </div>
         </section>
         <div className="cities__right-section" />

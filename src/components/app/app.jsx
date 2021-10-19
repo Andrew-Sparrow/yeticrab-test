@@ -8,7 +8,7 @@ import Main from '../main/main';
 import Error from '../not-found/not-found';
 import LoadingScreen from '../loading-screen/loading-screen';
 import {getIsDataLoaded} from '../../store/books/selectors';
-import NewBookForm from '../new-book-form/new-book-form';
+import NewBookForm from '../new-order-form/new-order-form';
 
 function App() {
   const isDataLoaded = useSelector(getIsDataLoaded);

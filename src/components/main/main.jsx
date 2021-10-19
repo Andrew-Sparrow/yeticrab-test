@@ -1,7 +1,7 @@
 import React from 'react';
 import {useSelector} from 'react-redux';
 
-import ContactList from '../book-list/book-list';
+import OrdersList from '../order-list/order-list';
 import withLayout from '../hocs/with-layout';
 import Tabs from '../tabs/tabs';
 import NewItemButton from '../new-item-button/new-item-button';
@@ -14,28 +14,28 @@ function Main() {
   const activeGroupName = useSelector(getActiveGroupName);
   const books = useSelector(getBooks);
 
-  const filteredBooks = Util.getFavoritesBooks(activeGroupName, books);
+  const filteredOrders = Util.getFavoritesBooks(activeGroupName, books);
 
   return (
     <main className="page__main page__main--index">
-      <h1 className="visually-hidden">Cities</h1>
+      <h1 className="visually-hidden">Orders</h1>
       <Tabs />
       {
-        filteredBooks.length === 0
+        filteredOrders.length === 0
           ? <MainEmpty activeGroupName={activeGroupName}/>
           : (
             <div className="cities">
               <div className="cities__places-container container">
                 <section className="cities__places places">
-                  <h2 className="visually-hidden">Books</h2>
+                  <h2 className="visually-hidden">Orders</h2>
                   <NewItemButton />
-                  <b className="places__found">{filteredBooks.length} books in `{activeGroupName}` group</b>
-                  <ContactList
-                    items={filteredBooks}
+                  <b className="places__found">{filteredOrders.length} order in `{activeGroupName}` group</b>
+                  <OrdersList
+                    items={filteredOrders}
                     // first page number
                     initialPageNumber={0}
                     activeTabName={activeGroupName}
-                    activeBooks={filteredBooks}
+                    activeBooks={filteredOrders}
                   />
                 </section>
               </div>

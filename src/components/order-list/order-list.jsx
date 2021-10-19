@@ -1,10 +1,9 @@
-// import React, {useState} from 'react';
 import React, {useReducer, useEffect} from 'react';
 import {Fragment} from 'react';
 import PropTypes from 'prop-types';
 
-import Book from '../book/book';
-import contactProp from '../book/book.prop';
+import Order from '../order/order';
+import contactProp from '../order/order.prop';
 import Pagination from '../pagination/pagination';
 
 const FIRST_PAGE_NUMBER = 0; // the initialPageNumber starts with zero
@@ -12,7 +11,7 @@ const ITEMS_PER_PAGE = 3;
 let prevTabName = '';
 let prevBooks = [];
 
-function ContactList(props) {
+function OrdersList(props) {
   const {
     items,
     initialPageNumber,
@@ -55,7 +54,6 @@ function ContactList(props) {
     prevBooks = activeBooks;
   }, [activeTabName, slicedItems, activeBooks]);
 
-
   const pageNumberClickHandler = (dataPagination) => {
     let offset = Math.ceil(dataPagination.selected * ITEMS_PER_PAGE);
     slicedItems = items.slice(offset, offset + ITEMS_PER_PAGE);
@@ -66,15 +64,19 @@ function ContactList(props) {
   return (
     <Fragment>
       <ul className="cities__places-list places__list tabs__content">
-        {state.slicedItems.map((book) => (
-          <Book
-            key={book.id}
-            id={book.id}
-            title={book.title}
-            author={book.author}
-            group={book.group}
-            img={book.img}
-            favorite={book.favorite}
+        {state.slicedItems.map((order) => (
+          <Order
+            key={order.id}
+            id={order.id}
+            company={order.company}
+            date={order.date}
+            carrierFirstName={order.carrier_first_name}
+            carrierMiddleName={order.carrier_first_name}
+            carrierLastName={order.carrier_last_name}
+            favorite={order.favorite}
+            phone={order.phone}
+            comment={order.comment}
+            ati={order.ati}
           />
         ))}
       </ul>
@@ -88,7 +90,7 @@ function ContactList(props) {
   );
 }
 
-ContactList.propTypes = {
+OrdersList.propTypes = {
   items: PropTypes.arrayOf(contactProp),
   initialPageNumber: PropTypes.number,
   activeTabName: PropTypes.string,
@@ -96,4 +98,4 @@ ContactList.propTypes = {
   onListItemHover: PropTypes.func,
 };
 
-export default ContactList;
+export default OrdersList;

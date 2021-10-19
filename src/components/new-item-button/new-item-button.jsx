@@ -5,7 +5,7 @@ import {AppRoute} from '../../const';
 const NewItemButton = (props) => {
   return (
     <Link to={AppRoute.NEW_BOOK_FORM}>
-      <button className="press-button">Add New Book</button>
+      <button className="press-button">Add New Order</button>
     </Link>
   );
 };
