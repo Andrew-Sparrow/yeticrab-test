@@ -3,8 +3,8 @@ import Util from '../../util/util';
 
 import {
   changeGroup,
-  loadBooksAction,
-  addNewBookAction,
+  loadOrdersAction,
+  addNewOrderAction,
   changeFavoriteAction,
   deleteItemAction
 } from '../actions';
@@ -20,7 +20,7 @@ const orders = createReducer(initialState, (builder) => {
     .addCase(changeGroup, (state, action) => {
       state.activeGroupName = action.payload;
     })
-    .addCase(loadBooksAction, (state, action) => {
+    .addCase(loadOrdersAction, (state, action) => {
       state.orders = action.payload;
       state.isDataLoaded = true;
     })
@@ -31,9 +31,9 @@ const orders = createReducer(initialState, (builder) => {
     .addCase(deleteItemAction, (state, action) => {
       state.orders = Util.deleteItem(action.payload, state.orders);
     })
-    .addCase(addNewBookAction, (state, action) => {
+    .addCase(addNewOrderAction, (state, action) => {
       state.orders = Util.addNewItem(action.payload, state.orders);
     })
 });
 
-export {orders as books};
+export {orders};

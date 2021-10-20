@@ -8,7 +8,7 @@ import NewItemButton from '../new-item-button/new-item-button';
 
 import Util from '../../util/util';
 import MainEmpty from '../main-empty/main-empty';
-import {getOrders, getActiveGroupName} from '../../store/books/selectors';
+import {getOrders, getActiveGroupName} from '../../store/orders/selectors';
 
 function Main() {
   const activeGroupName = useSelector(getActiveGroupName);

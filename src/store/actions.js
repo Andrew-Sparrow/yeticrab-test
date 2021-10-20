@@ -2,10 +2,10 @@ import {createAction} from '@reduxjs/toolkit';
 
 export const ActionType = {
   CHANGE_GROUP: 'orders/changeGroup',
-  LOAD_ORDERS: 'orders/loadBooks',
+  LOAD_ORDERS: 'orders/loadOrders',
   CHANGE_FAVORITE: 'orders/isFavorite',
   DELETE_ITEM: 'orders/delete',
-  LOAD_NEW_ORDER: 'orders/loadNewBook',
+  LOAD_NEW_ORDER: 'orders/loadNewOrder',
   REDIRECT_TO_ROUTE: 'orders/redirectToRoute',
 };
 
@@ -14,14 +14,14 @@ export const changeGroup = createAction(
   (groupName) => ({payload: groupName})
 );
 
-export const loadBooksAction = createAction(
+export const loadOrdersAction = createAction(
   ActionType.LOAD_ORDERS,
-  (books) => ({payload: books})
+  (items) => ({payload: items})
 );
 
-export const addNewBookAction = createAction(
+export const addNewOrderAction = createAction(
   ActionType.LOAD_NEW_ORDER,
-  (new_book) => ({payload: new_book})
+  (new_item) => ({payload: new_item})
 );
 
 export const changeFavoriteAction = createAction(

@@ -1,9 +1,9 @@
 import {
-  loadBooksAction,
+  loadOrdersAction,
   changeFavoriteAction,
   deleteItemAction,
   redirectToRoute,
-  addNewBookAction
+  addNewOrderAction
 } from './actions';
 
 import {APIRoute, AppRoute} from '../const';
@@ -11,7 +11,7 @@ import {APIRoute, AppRoute} from '../const';
 export const fetchOrdersList = () => (dispatch, _getState, api) => (
   api.get(APIRoute.ORDERS)
     .then(({data}) => {
-      dispatch(loadBooksAction(data));
+      dispatch(loadOrdersAction(data));
     })
     .catch((err) => {})
 );
@@ -46,7 +46,7 @@ export const addNewOrderApi = (order) => (dispatch, _getState, api) => {
     "favorite": order.favorite
   })
     .then((info) => {
-      dispatch(addNewBookAction(info.data));
+      dispatch(addNewOrderAction(info.data));
       console.log(info.data);
 
       // dispatch(loadComments(info.data));

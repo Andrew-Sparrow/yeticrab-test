@@ -7,7 +7,7 @@ import {AppRoute} from '../../const';
 import Main from '../main/main';
 import Error from '../not-found/not-found';
 import LoadingScreen from '../loading-screen/loading-screen';
-import {getIsDataLoaded} from '../../store/books/selectors';
+import {getIsDataLoaded} from '../../store/orders/selectors';
 import NewBookForm from '../new-order-form/new-order-form';
 
 function App() {
