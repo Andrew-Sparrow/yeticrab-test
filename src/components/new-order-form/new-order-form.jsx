@@ -9,6 +9,7 @@ const NewBookForm = (props) => {
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     'company': '',
+    "date": new Date().toJSON(),
     'first_name': '',
     'middle_name': '',
     'last_name': '',

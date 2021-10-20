@@ -25,7 +25,7 @@ export const addToFavoriteApi = (id, isFavorite) => (dispatch, _getState, api) =
 );
 
 export const deleteItemApi = (id) => (dispatch, _getState, api) => (
-  api.delete(`${ APIRoute.ORDERS }/${ id}`)
+  api.delete(`${ APIRoute.ORDERS }/${id}`)
     .then((info) => {
       dispatch(deleteItemAction(id));
     })
@@ -34,10 +34,9 @@ export const deleteItemApi = (id) => (dispatch, _getState, api) => (
 
 export const addNewOrderApi = (order) => (dispatch, _getState, api) => {
   // dispatch(changeLoadingCommentProcessStatus(true));
-  console.log(order);
   api.post(`${ APIRoute.ORDERS }`, {
-    "date": new Date().toJSON,
     "company": order.company,
+    "date": order.date,
     "carrier_first_name": order.first_name,
     "carrier_middle_name": order.middle_name,
     "carrier_last_name": order.last_name,
