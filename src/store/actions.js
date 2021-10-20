@@ -7,7 +7,25 @@ export const ActionType = {
   DELETE_ITEM: 'orders/delete',
   LOAD_NEW_ORDER: 'orders/loadNewOrder',
   REDIRECT_TO_ROUTE: 'orders/redirectToRoute',
+  CHANGE_LOADING_FORM_PROCESS_STATUS: 'form/changeLoadingFormProcessStatus',
+  SHOW_FORM_ERROR_MESSAGE: 'form/showErrorFormMessage',
+  CHANGE_FORM_SENDED_SUCCESSFULLY_STATUS: 'comment/changeCommentSendedSuccessfulyStatus',
 };
+
+export const changeLoadingFormProcessStatus = createAction(
+  ActionType.CHANGE_LOADING_FORM_PROCESS_STATUS,
+  (isLoading) => ({payload: isLoading}),
+);
+
+export const changeIsFormSendedSuccessfullyStatus = createAction(
+  ActionType.CHANGE_FORM_SENDED_SUCCESSFULLY_STATUS,
+  (isFormSendedSuccessfully) => ({payload: isFormSendedSuccessfully}),
+);
+
+export const showErrorFormMessage = createAction(
+  ActionType.SHOW_FORM_ERROR_MESSAGE,
+  (isShowErrorMessage, errorMessageText) => ({payload: {isShowErrorMessage, errorMessageText}}),
+);
 
 export const changeGroup = createAction(
   ActionType.CHANGE_GROUP,
