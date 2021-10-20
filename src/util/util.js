@@ -2,22 +2,22 @@ import nanoid from 'nanoid';
 import {groupNames} from '../const';
 
 const Util = {
-  getFilteredBooks (activeGroup, books) {
-    let filteredBooks = [];
+  getFilteredOrders (activeGroup, orders) {
+    let filteredItems = [];
     if (activeGroup === groupNames.ALL) {
-      return books;
+      return orders;
     }
-    filteredBooks = books.filter((item) => item.group === activeGroup);
-    return filteredBooks;
+    filteredItems = orders.filter((item) => item.group === activeGroup);
+    return filteredItems;
   },
 
-  getFavoritesBooks(activeGroup, books) {
-    let favoritesBooks = [];
+  getFavoritesOrders(activeGroup, orders) {
+    let favoritesOrders = [];
     if (activeGroup === groupNames.ALL) {
-      return books;
+      return orders;
     }
-    favoritesBooks = books.filter((item) => item.favorite === true);
-    return favoritesBooks;
+    favoritesOrders = orders.filter((item) => item.favorite === true);
+    return favoritesOrders;
   },
 
   formatDate (dateString) {
@@ -32,24 +32,24 @@ const Util = {
     return generatedIdList;
   },
 
-  getUpdatedBooks(id, books, favorite) {
-    const newBooks = [...books];
-    const index = newBooks.findIndex((book) => book.id === id);
-    newBooks[index].favorite = favorite;
-    return newBooks;
+  getUpdatedOrders(id, orders, favorite) {
+    const newOrders = [...orders];
+    const index = newOrders.findIndex((order) => order.id === id);
+    newOrders[index].favorite = favorite;
+    return newOrders;
   },
 
   deleteItem(id, items) {
-    const newBooks = [...items];
-    const index = newBooks.findIndex((item) => item.id === id);
-    newBooks.splice(index, 1);
-    return newBooks;
+    const newItems = [...items];
+    const index = newItems.findIndex((item) => item.id === id);
+    newItems.splice(index, 1);
+    return newItems;
   },
 
   addNewItem(newItem, items) {
-    const newBooks = [...items];
-    newBooks.push(newItem);
-    return newBooks;
+    const newItems = [...items];
+    newItems.push(newItem);
+    return newItems;
   }
 }
 

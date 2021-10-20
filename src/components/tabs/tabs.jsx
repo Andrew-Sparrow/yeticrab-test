@@ -12,7 +12,7 @@ function Tabs(props) {
 
   const handleTabClick = (evt) => {
     evt.preventDefault();
-    dispatch(changeGroup(evt.currentTarget.dataset.city));
+    dispatch(changeGroup(evt.currentTarget.dataset.group));
   };
 
   return (
@@ -22,7 +22,7 @@ function Tabs(props) {
           {groupList.map((group) => (
             <li className="locations__item" key={group}>
               <Link
-                data-city={group}
+                data-group={group}
                 className={`locations__item-link tabs__item ${ group === activeGroupName && 'tabs__item--active' }`}
                 to="#"
                 onClick={handleTabClick}

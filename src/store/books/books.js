@@ -10,30 +10,30 @@ import {
 } from '../actions';
 
 const initialState = {
-  books: [],
+  orders: [],
   isDataLoaded: false,
   activeGroupName: 'All',
 };
 
-const books = createReducer(initialState, (builder) => {
+const orders = createReducer(initialState, (builder) => {
   builder
     .addCase(changeGroup, (state, action) => {
       state.activeGroupName = action.payload;
     })
     .addCase(loadBooksAction, (state, action) => {
-      state.books = action.payload;
+      state.orders = action.payload;
       state.isDataLoaded = true;
     })
     .addCase(changeFavoriteAction, (state, action) => {
-      state.books = Util.getUpdatedBooks(action.payload.id, state.books, action.payload.favorite);
+      state.orders = Util.getUpdatedOrders(action.payload.id, state.orders, action.payload.favorite);
       return state;
     })
     .addCase(deleteItemAction, (state, action) => {
-      state.books = Util.deleteItem(action.payload, state.books);
+      state.orders = Util.deleteItem(action.payload, state.orders);
     })
     .addCase(addNewBookAction, (state, action) => {
-      state.books = Util.addNewItem(action.payload, state.books);
+      state.orders = Util.addNewItem(action.payload, state.orders);
     })
 });
 
-export {books};
+export {orders as books};

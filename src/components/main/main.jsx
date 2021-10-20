@@ -8,13 +8,13 @@ import NewItemButton from '../new-item-button/new-item-button';
 
 import Util from '../../util/util';
 import MainEmpty from '../main-empty/main-empty';
-import {getBooks, getActiveGroupName} from '../../store/books/selectors';
+import {getOrders, getActiveGroupName} from '../../store/books/selectors';
 
 function Main() {
   const activeGroupName = useSelector(getActiveGroupName);
-  const books = useSelector(getBooks);
+  const orders = useSelector(getOrders);
 
-  const filteredOrders = Util.getFavoritesBooks(activeGroupName, books);
+  const filteredOrders = Util.getFavoritesOrders(activeGroupName, orders);
 
   return (
     <main className="page__main page__main--index">
