@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {useDispatch} from 'react-redux';
 
 import withLayout from '../hocs/with-layout';
@@ -19,9 +19,25 @@ const NewBookForm = (props) => {
     'favorite': false
   });
 
+  const [formErrors, setFormErrors] = useState({});
+
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    dispatch(addNewOrderApi(formData));
+    setFormErrors(validate(formData));
+    if (Object.keys(formErrors).length === 0) {
+      dispatch(addNewOrderApi(formData));
+    }
+  };
+
+  const validate = (values) => {
+    const errors = {};
+    if (!values.company) {
+      errors.company = "Введите название компании!";
+    }
+    if (!values.ati) {
+      errors.ati = "Введите ATI код!";
+    }
+    return errors;
   };
 
   const handleInputChange = (evt) => {
@@ -48,7 +64,7 @@ const NewBookForm = (props) => {
               method="post"
               onSubmit={handleSubmit}
             >
-              <label className="reviews__label form__label" htmlFor="title">Company</label>
+              <label className="reviews__label form__label" htmlFor="title">Company*</label>
               <input
                 className="reviews__textarea form__textarea"
                 onChange={handleInputChange}
@@ -56,6 +72,7 @@ const NewBookForm = (props) => {
                 value={formData.company}
                 name="company"
               />
+              <p className="reviews__error">{formErrors.company}</p>
               <label className="reviews__label form__label" htmlFor="first_name">Carrier First Name</label>
               <input
                 className="reviews__textarea form__textarea"
@@ -96,7 +113,7 @@ const NewBookForm = (props) => {
                 value={formData.comment}
                 name="comment"
               />
-              <label className="reviews__label form__label" htmlFor="comment">ATI Code</label>
+              <label className="reviews__label form__label" htmlFor="comment">ATI Code*</label>
               <input
                 className="reviews__textarea form__textarea"
                 onChange={handleInputChange}
@@ -104,6 +121,7 @@ const NewBookForm = (props) => {
                 value={formData.ati}
                 name="ati"
               />
+              <p className="reviews__error">{formErrors.ati}</p>
               <label className="reviews__label form__label" htmlFor="favorite">Favorite</label>
               <input
                 className="form__favorite"

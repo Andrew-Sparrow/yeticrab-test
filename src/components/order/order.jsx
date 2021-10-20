@@ -36,6 +36,7 @@ function Order(props) {
       id={id}
     >
       <div className="contact__right">
+        <p className="contact__data">Номер заявки: <span className="contact__name">{id}</span></p>
         <p className="contact__data">Company: <span className="contact__name">{company}</span></p>
         <p className="contact__data">Date: <span className="contact__name">{new Date(date).toDateString()}</span></p>
         <p className="contact__data">Carrier First Name: <span className="contact__name">{carrierFirstName}</span></p>

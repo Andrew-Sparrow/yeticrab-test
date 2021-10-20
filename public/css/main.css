@@ -1672,9 +1672,12 @@ img {
   color: #000
 }
 
+.reviews__error {
+  color: #ff1f1f;
+}
+
 .reviews__textarea {
   width: 568px;
-  margin-bottom: 12px;
   padding: 15px 16px
 }
 
