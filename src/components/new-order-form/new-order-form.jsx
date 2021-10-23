@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
 import {useDispatch} from 'react-redux';
+import {useSelector} from 'react-redux';
+import {getIsFormSending} from '../../store/form/selectors';
 
 import withLayout from '../hocs/with-layout';
 import SubmitButton from '../submit-button/submit-button';
@@ -23,6 +25,8 @@ const NewOrderForm = (props) => {
     company: null,
     ati: null
   });
+
+  const isFormLoading = useSelector(getIsFormSending);
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
@@ -61,7 +65,7 @@ const NewOrderForm = (props) => {
         <section className="cities__places form">
           <h2 className="visually-hidden">Order</h2>
           <h2 className="form__title">Add New Order</h2>
-          <fieldset disabled={false} style={{border: 'none'}}>
+          <fieldset disabled={isFormLoading} style={{border: 'none'}}>
             <form
               className="reviews__form form"
               action=""
@@ -135,7 +139,7 @@ const NewOrderForm = (props) => {
                 checked={formData.favorite}
                 name="favorite"
               />
-              <SubmitButton/>
+              <SubmitButton isFormLoading={isFormLoading}/>
             </form>
           </fieldset>
         </section>

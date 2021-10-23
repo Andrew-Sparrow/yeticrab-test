@@ -2169,10 +2169,14 @@ img {
   text-align: center;
 }
 
-.press-button--submit {
+.press-button__submit {
   width: 150px;
   margin-left: 0;
   margin-top: 50px;
+}
+
+.press-button--disabled {
+  background-color: #cecbcb
 }
 
 .form__favorite {
@@ -2185,6 +2189,16 @@ img {
 .form__genre {
   display: block;
   height: 40px;
+}
+
+.order__message {
+  width: 100%;
+  color: #4cbe0a;
+  font-size: 40px;
+  font-weight: 700;
+  background-color: #ffffff;
+  text-align: center;
+  border: 1px solid #4cbe0a;
 }
 
 /*# sourceMappingURL=main.css.map */

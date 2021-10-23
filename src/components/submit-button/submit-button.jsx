@@ -1,11 +1,14 @@
 import React from 'react';
 
 const SubmitButton = (props) => {
+  const {isFormLoading} = props;
+
   return (
     <button
-      className="press-button press-button--submit"
+      className={`press-button press-button__submit ${isFormLoading && "press-button--disabled"}`}
       type="submit"
-    >Add</button>
+      disabled={isFormLoading}
+    > {isFormLoading ? 'Adding ...' : 'Add'}</button>
   );
 };
 

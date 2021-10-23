@@ -1,9 +1,11 @@
 import {
+  changeLoadingFormProcessStatus,
   loadOrdersAction,
   changeFavoriteAction,
   deleteItemAction,
   redirectToRoute,
-  addNewOrderAction
+  addNewOrderAction,
+  changeIsFormSendedSuccessfullyStatus
 } from './actions';
 
 import {APIRoute, AppRoute} from '../const';
@@ -33,7 +35,7 @@ export const deleteItemApi = (id) => (dispatch, _getState, api) => (
 );
 
 export const addNewOrderApi = (order) => (dispatch, _getState, api) => {
-  // dispatch(changeLoadingCommentProcessStatus(true));
+  dispatch(changeLoadingFormProcessStatus(true));
   api.post(`${ APIRoute.ORDERS }`, {
     "company": order.company,
     "date": order.date,
@@ -47,11 +49,9 @@ export const addNewOrderApi = (order) => (dispatch, _getState, api) => {
   })
     .then((info) => {
       dispatch(addNewOrderAction(info.data));
-
-      // dispatch(loadComments(info.data));
-      // dispatch(changeLoadingCommentProcessStatus(false));
+      dispatch(changeLoadingFormProcessStatus(false));
       // dispatch(showErrorCommentFormMessage(false));
-      // dispatch(changeIsCommentSendedSuccessfullyStatus(true));
+      dispatch(changeIsFormSendedSuccessfullyStatus(true));
       /*
       this additional bottom line was made for clean up a comment form
       and establish "isCommentFormSendedSuccessfully" to "false"
