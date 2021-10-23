@@ -47,7 +47,6 @@ export const addNewOrderApi = (order) => (dispatch, _getState, api) => {
   })
     .then((info) => {
       dispatch(addNewOrderAction(info.data));
-      console.log(info.data);
 
       // dispatch(loadComments(info.data));
       // dispatch(changeLoadingCommentProcessStatus(false));

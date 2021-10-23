@@ -1674,11 +1674,13 @@ img {
 
 .reviews__error {
   color: #ff1f1f;
+  margin-bottom: 20px;
 }
 
 .reviews__textarea {
   width: 568px;
-  padding: 15px 16px
+  padding: 15px 16px;
+  margin-bottom: 10px;
 }
 
 .reviews__rating-form {

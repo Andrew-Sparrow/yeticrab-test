@@ -5,11 +5,11 @@ import withLayout from '../hocs/with-layout';
 import SubmitButton from '../submit-button/submit-button';
 import {addNewOrderApi} from '../../store/api-actions';
 
-const NewBookForm = (props) => {
+const NewOrderForm = (props) => {
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     'company': '',
-    "date": new Date().toJSON(),
+    'date': new Date().toJSON(),
     'first_name': '',
     'middle_name': '',
     'last_name': '',
@@ -19,22 +19,26 @@ const NewBookForm = (props) => {
     'favorite': false
   });
 
-  const [formErrors, setFormErrors] = useState({});
+  const [formErrors, setFormErrors] = useState({
+    company: null,
+    ati: null
+  });
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    setFormErrors(validate(formData));
-    if (Object.keys(formErrors).length === 0) {
+    const formErrorsValidation = isFormValid();
+    setFormErrors(formErrorsValidation);
+    if (Object.keys(formErrorsValidation).length === 0) {
       dispatch(addNewOrderApi(formData));
     }
   };
 
-  const validate = (values) => {
-    const errors = {};
-    if (!values.company) {
+  const isFormValid = () => {
+    let errors = {};
+    if (!formData.company) {
       errors.company = "Введите название компании!";
     }
-    if (!values.ati) {
+    if (!formData.ati) {
       errors.ati = "Введите ATI код!";
     }
     return errors;
@@ -140,5 +144,5 @@ const NewBookForm = (props) => {
   );
 };
 
-const withLayoutMain = withLayout(NewBookForm);
+const withLayoutMain = withLayout(NewOrderForm);
 export default withLayoutMain;
