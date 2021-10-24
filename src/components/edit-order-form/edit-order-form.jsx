@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {useSelector} from 'react-redux';
 import {getIsFormSending} from '../../store/form/selectors';
+import {useParams} from 'react-router-dom';
+import { getOrders } from '../../store/orders/selectors';
 
 import withLayout from '../hocs/with-layout';
 import EditButton from '../edit-button/edit-button';
@@ -14,17 +16,23 @@ const ErrorMessage = {
 
 const NewOrderForm = (props) => {
   const dispatch = useDispatch();
+  const {id} = useParams();
+
+  const orders = useSelector(getOrders);
+  const order = orders.find((order) => order.id === +id);
+
   const [formData, setFormData] = useState({
-    'company': '',
-    'date': new Date().toJSON(),
-    'first_name': '',
-    'middle_name': '',
-    'last_name': '',
-    'phone': '',
-    'comment': '',
-    'ati': '',
-    'favorite': false
+    'company': order.company,
+    'date': order.date,
+    'first_name': order.carrier_first_name,
+    'middle_name': order.carrier_middle_name,
+    'last_name': order.carrier_last_name,
+    'phone': order.phone,
+    'comment': order.comment,
+    'ati': order.ati,
+    'favorite': order.favorite
   });
+
 
   const [formErrors, setFormErrors] = useState({
     company: null,
