@@ -1,9 +1,8 @@
 export const AppRoute = {
   MAIN: '/',
-  NEW_BOOK_FORM: '/form'
+  NEW_ORDER_FORM: '/form',
+  EDIT_FORM: '/edit'
 };
-
-export const defaultImg = 'https://iupac.org/wp-content/uploads/2018/05/default-avatar.png';
 
 export const groupList = [
   'All',

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {useDispatch} from 'react-redux';
 import {Link} from 'react-router-dom';
+import {AppRoute} from '../../const';
 
 import {addToFavoriteApi, deleteItemApi} from '../../store/api-actions';
 
@@ -23,6 +24,10 @@ function Order(props) {
 
   const onFavoriteClick = (evt) => {
     dispatch(addToFavoriteApi(id, !favorite));
+  };
+
+  const onEditClick = (evt) => {
+    console.log('edit');
   };
 
   const onDeleteClick = (evt) => {
@@ -53,12 +58,14 @@ function Order(props) {
           </svg>
           <span className="visually-hidden">Add to bookmarks</span>
         </button>
-        <button className="contact__bookmark-button button" type="button">
-          <svg className="contact__edit-icon" width="30" height="30">
-            <use xlinkHref="#icon-pencil"></use>
-          </svg>
-          <span className="visually-hidden">Edit</span>
-        </button>
+        <Link to={AppRoute.EDIT_FORM}>
+          <button className="contact__bookmark-button button" type="button" onClick={onEditClick}>
+            <svg className="contact__edit-icon" width="30" height="30">
+              <use xlinkHref="#icon-pencil"></use>
+            </svg>
+            <span className="visually-hidden">Edit</span>
+          </button>
+        </Link>
         <button className="contact__bookmark-button button" type="button" onClick={onDeleteClick}>
           <svg className="contact__bookmark-icon" width="30" height="30">
             <use xlinkHref="#icon-delete"></use>

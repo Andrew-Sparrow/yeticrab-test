@@ -8,7 +8,8 @@ import Main from '../main/main';
 import Error from '../not-found/not-found';
 import LoadingScreen from '../loading-screen/loading-screen';
 import {getIsDataLoaded} from '../../store/orders/selectors';
-import NewBookForm from '../new-order-form/new-order-form';
+import NewOrderForm from '../new-order-form/new-order-form';
+import EditOrderForm from '../edit-order-form/edit-order-form';
 
 function App() {
   const isDataLoaded = useSelector(getIsDataLoaded);
@@ -25,8 +26,11 @@ function App() {
         <Route exact path={AppRoute.MAIN}>
           <Main className="page page--gray page--index" />
         </Route>
-        <Route exact path={AppRoute.NEW_BOOK_FORM}>
-          <NewBookForm />
+        <Route exact path={AppRoute.NEW_ORDER_FORM}>
+          <NewOrderForm />
+        </Route>
+        <Route exact path={AppRoute.EDIT_FORM}>
+          <EditOrderForm />
         </Route>
         <Route>
           <Error />

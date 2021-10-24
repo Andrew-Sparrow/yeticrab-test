@@ -4,7 +4,7 @@ import {useSelector} from 'react-redux';
 import {getIsFormSending} from '../../store/form/selectors';
 
 import withLayout from '../hocs/with-layout';
-import SubmitButton from '../submit-button/submit-button';
+import EditButton from '../edit-button/edit-button';
 import {addNewOrderApi} from '../../store/api-actions';
 
 const ErrorMessage = {
@@ -69,7 +69,7 @@ const NewOrderForm = (props) => {
       <div className="cities__places-container container">
         <section className="cities__places form">
           <h2 className="visually-hidden">Order</h2>
-          <h2 className="form__title">Add New Order</h2>
+          <h2 className="form__title">Edit Order</h2>
           <fieldset disabled={isFormLoading} style={{border: 'none'}}>
             <form
               className="reviews__form form"
@@ -144,7 +144,7 @@ const NewOrderForm = (props) => {
                 checked={formData.favorite}
                 name="favorite"
               />
-              <SubmitButton isFormLoading={isFormLoading}/>
+              <EditButton isFormLoading={isFormLoading}/>
             </form>
           </fieldset>
         </section>

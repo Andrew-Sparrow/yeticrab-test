@@ -52,6 +52,7 @@ export const addNewOrderApi = (order) => (dispatch, _getState, api) => {
       dispatch(changeLoadingFormProcessStatus(false));
       // dispatch(showErrorCommentFormMessage(false));
       dispatch(changeIsFormSendedSuccessfullyStatus(true));
+      setTimeout(() => dispatch(changeIsFormSendedSuccessfullyStatus(false)), 3000);
       /*
       this additional bottom line was made for clean up a comment form
       and establish "isCommentFormSendedSuccessfully" to "false"
