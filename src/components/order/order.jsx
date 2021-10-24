@@ -58,7 +58,7 @@ function Order(props) {
           </svg>
           <span className="visually-hidden">Add to bookmarks</span>
         </button>
-        <Link to={AppRoute.EDIT_FORM}>
+        <Link to={AppRoute.EDIT_FORM} className="contact__bookmark-button button">
           <button className="contact__bookmark-button button" type="button" onClick={onEditClick}>
             <svg className="contact__edit-icon" width="30" height="30">
               <use xlinkHref="#icon-pencil"></use>

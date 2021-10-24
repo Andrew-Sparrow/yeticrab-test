@@ -67,3 +67,37 @@ export const addNewOrderApi = (order) => (dispatch, _getState, api) => {
       // dispatch(changeIsCommentSendedSuccessfullyStatus(false));
     });
 };
+
+export const editOrderApi = (order) => (dispatch, _getState, api) => {
+  dispatch(changeLoadingFormProcessStatus(true));
+  api.put(`${ APIRoute.ORDERS }/${ order.id}`, {
+    "company": order.company,
+    "date": order.date,
+    "carrier_first_name": order.first_name,
+    "carrier_middle_name": order.middle_name,
+    "carrier_last_name": order.last_name,
+    "phone": order.phone,
+    "comment": order.comment,
+    "ati": order.ati,
+    "favorite": order.favorite
+  })
+    .then((info) => {
+      dispatch(addNewOrderAction(info.data));
+      dispatch(changeLoadingFormProcessStatus(false));
+      // dispatch(showErrorCommentFormMessage(false));
+      dispatch(changeIsFormSendedSuccessfullyStatus(true));
+      setTimeout(() => dispatch(changeIsFormSendedSuccessfullyStatus(false)), 3000);
+      /*
+      this additional bottom line was made for clean up a comment form
+      and establish "isCommentFormSendedSuccessfully" to "false"
+      to fix problem with save text in comment form after network error
+       */
+      // dispatch(changeIsCommentSendedSuccessfullyStatus(false));
+      dispatch(redirectToRoute(AppRoute.MAIN));
+    })
+    .catch((err) => {
+      // dispatch(showErrorCommentFormMessage(true, err.message));
+      // dispatch(changeLoadingCommentProcessStatus(false));
+      // dispatch(changeIsCommentSendedSuccessfullyStatus(false));
+    });
+};

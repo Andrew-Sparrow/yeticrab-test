@@ -5,7 +5,7 @@ import {getIsFormSending} from '../../store/form/selectors';
 
 import withLayout from '../hocs/with-layout';
 import EditButton from '../edit-button/edit-button';
-import {addNewOrderApi} from '../../store/api-actions';
+import {editOrderApi} from '../../store/api-actions';
 
 const ErrorMessage = {
   COMPANY: "Введите название компании!",
@@ -38,7 +38,7 @@ const NewOrderForm = (props) => {
     const formErrorsValidation = isFormValid();
     setFormErrors(formErrorsValidation);
     if (Object.keys(formErrorsValidation).length === 0) {
-      dispatch(addNewOrderApi(formData));
+      dispatch(editOrderApi(formData));
     }
   };
 

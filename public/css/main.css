@@ -635,10 +635,10 @@ img {
 .contact__left {
   width: 150px;
   background-color: #f5f5f5;
-  object-fit: cover;
 }
 
 .contact__right {
+  width: 447px;
   padding-left: 20px;
   padding-right: 20px;
   flex-grow: 1;
@@ -2201,27 +2201,6 @@ img {
   border: 1px solid #4cbe0a;
   opacity: 1;
   transition: all 250ms linear 2s;
-}
-
-.alert-enter {
-  opacity: 0;
-  transform: scale(0.9);
-}
-
-.alert-enter-active {
-  opacity: 1;
-  transform: translateX(0);
-  transition: opacity 300ms, transform 300ms;
-}
-
-.alert-exit {
-  opacity: 1;
-}
-
-.alert-exit-active {
-  opacity: 0;
-  transform: scale(0.9);
-  transition: opacity 300ms, transform 300ms;
 }
 
 /*# sourceMappingURL=main.css.map */
