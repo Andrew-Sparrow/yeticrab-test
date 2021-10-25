@@ -5,7 +5,9 @@ import {
   deleteItemAction,
   redirectToRoute,
   addNewOrderAction,
-  changeIsFormSendedSuccessfullyStatus
+  changeIsFormSendedSuccessfullyStatus,
+  changeIsFormEditedSuccessfullyStatus,
+  editOrderAction
 } from './actions';
 
 import {APIRoute, AppRoute} from '../const';
@@ -68,9 +70,9 @@ export const addNewOrderApi = (order) => (dispatch, _getState, api) => {
     });
 };
 
-export const editOrderApi = (order) => (dispatch, _getState, api) => {
+export const editOrderApi = (order, id) => (dispatch, _getState, api) => {
   dispatch(changeLoadingFormProcessStatus(true));
-  api.put(`${ APIRoute.ORDERS }/${ order.id}`, {
+  api.patch(`${ APIRoute.ORDERS }/${ id }`, {
     "company": order.company,
     "date": order.date,
     "carrier_first_name": order.first_name,
@@ -82,11 +84,12 @@ export const editOrderApi = (order) => (dispatch, _getState, api) => {
     "favorite": order.favorite
   })
     .then((info) => {
-      dispatch(addNewOrderAction(info.data));
+      console.log(info.data)
+      dispatch(editOrderAction(info.data));
       dispatch(changeLoadingFormProcessStatus(false));
       // dispatch(showErrorCommentFormMessage(false));
-      dispatch(changeIsFormSendedSuccessfullyStatus(true));
-      setTimeout(() => dispatch(changeIsFormSendedSuccessfullyStatus(false)), 3000);
+      dispatch(changeIsFormEditedSuccessfullyStatus(true));
+      setTimeout(() => dispatch(changeIsFormEditedSuccessfullyStatus(false)), 3000);
       /*
       this additional bottom line was made for clean up a comment form
       and establish "isCommentFormSendedSuccessfully" to "false"

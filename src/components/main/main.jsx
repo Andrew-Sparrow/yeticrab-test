@@ -10,12 +10,15 @@ import Util from '../../util/util';
 import MainEmpty from '../main-empty/main-empty';
 import {getOrders, getActiveGroupName} from '../../store/orders/selectors';
 import {getIsFormSendedSuccessfully} from '../../store/form/selectors';
+import { getIsFormEditedSuccessfully } from '../../store/form/selectors';
 import SuccessMessage from '../success-message/success-message';
+import SuccessMessageEdit from '../success-message-edit/success-message-edit';
 
 function Main() {
   const activeGroupName = useSelector(getActiveGroupName);
   const orders = useSelector(getOrders);
   const isFormSuccessfullySended = useSelector(getIsFormSendedSuccessfully);
+  const isFormSuccessfullyEdited = useSelector(getIsFormEditedSuccessfully);
 
   const filteredOrders = Util.getFavoritesOrders(activeGroupName, orders);
 
@@ -24,6 +27,7 @@ function Main() {
       <h1 className="visually-hidden">Orders</h1>
       <Tabs />
       {isFormSuccessfullySended ? <SuccessMessage /> : ''}
+      {isFormSuccessfullyEdited ? <SuccessMessageEdit /> : ''}
       {
         filteredOrders.length === 0
           ? <MainEmpty activeGroupName={activeGroupName}/>

@@ -6,7 +6,8 @@ import {
   loadOrdersAction,
   addNewOrderAction,
   changeFavoriteAction,
-  deleteItemAction
+  deleteItemAction,
+  editOrderAction,
 } from '../actions';
 
 const initialState = {
@@ -33,6 +34,9 @@ const orders = createReducer(initialState, (builder) => {
     })
     .addCase(addNewOrderAction, (state, action) => {
       state.orders = Util.addNewItem(action.payload, state.orders);
+    })
+    .addCase(editOrderAction, (state, action) => {
+      state.orders = Util.getEditedOrders(action.payload, state.orders);
     })
 });
 

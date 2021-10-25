@@ -39,6 +39,13 @@ const Util = {
     return newOrders;
   },
 
+  getEditedOrders(updatedOrder, orders) {
+    const newOrders = [...orders];
+    const index = newOrders.findIndex((order) => order.id === updatedOrder.id);
+    newOrders[index] = updatedOrder;
+    return newOrders;
+  },
+
   deleteItem(id, items) {
     const newItems = [...items];
     const index = newItems.findIndex((item) => item.id === id);

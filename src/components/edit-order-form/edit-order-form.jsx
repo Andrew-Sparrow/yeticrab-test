@@ -33,7 +33,6 @@ const NewOrderForm = (props) => {
     'favorite': order.favorite
   });
 
-
   const [formErrors, setFormErrors] = useState({
     company: null,
     ati: null
@@ -46,7 +45,7 @@ const NewOrderForm = (props) => {
     const formErrorsValidation = isFormValid();
     setFormErrors(formErrorsValidation);
     if (Object.keys(formErrorsValidation).length === 0) {
-      dispatch(editOrderApi(formData));
+      dispatch(editOrderApi(formData, id));
     }
   };
 
