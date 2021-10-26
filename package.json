@@ -2,7 +2,7 @@
   "name": "yeticrab-test",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://andrew-sparrow.github.io/yeticrab-test",
+  "homepage": ".",
   "dependencies": {
     "@reduxjs/toolkit": "^1.5.0",
     "axios": "^0.21.1",
@@ -18,7 +18,7 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-scripts start --prefix /",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
