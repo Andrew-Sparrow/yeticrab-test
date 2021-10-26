@@ -1,8 +1,10 @@
-import React, {useReducer, useEffect} from 'react';
+import React, {useReducer, useEffect, useState, useRef} from 'react';
 import {Fragment} from 'react';
 import PropTypes from 'prop-types';
 
 import Order from '../order/order';
+import Search from '../search/search';
+
 import contactProp from '../order/order.prop';
 import Pagination from '../pagination/pagination';
 
@@ -16,8 +18,25 @@ function OrdersList(props) {
     items,
     initialPageNumber,
     activeTabName,
-    activeBooks
+    activeOrders
   } = props;
+
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+  const inputSearchElement = useRef('');
+
+  const getSearchTerm = () => {
+    setSearchTerm(inputSearchElement.current.value);
+
+    if (searchTerm !== '') {
+      const newOrderList = items.filter((order) => {
+        return order.company.toLowerCase().includes(searchTerm.toLowerCase());
+      });
+      setSearchResults(newOrderList);
+    } else {
+      setSearchResults(items);
+    }
+  };
 
   const selectedItemsOnFirstPage = items.slice(0, ITEMS_PER_PAGE);
   const pagesTotalAmount = Math.ceil(items.length / ITEMS_PER_PAGE);
@@ -45,14 +64,14 @@ function OrdersList(props) {
   const [state, dispatch] = useReducer(reducer, initialPageNumber, init);
 
   useEffect(() => {
-    if (prevTabName !== activeTabName || prevBooks !== activeBooks) {
+    if (prevTabName !== activeTabName || prevBooks !== activeOrders) {
       dispatch({type: 'changeSlicedItems', payload: []});
       dispatch({type: 'changeSlicedItems', payload: slicedItems});
       dispatch({type: 'changePageNumber', payload: FIRST_PAGE_NUMBER});
     }
     prevTabName = activeTabName;
-    prevBooks = activeBooks;
-  }, [activeTabName, slicedItems, activeBooks]);
+    prevBooks = activeOrders;
+  }, [activeTabName, slicedItems, activeOrders]);
 
   const pageNumberClickHandler = (dataPagination) => {
     let offset = Math.ceil(dataPagination.selected * ITEMS_PER_PAGE);
@@ -63,6 +82,12 @@ function OrdersList(props) {
 
   return (
     <Fragment>
+      <Search
+        searchInputElement={inputSearchElement}
+        searchTerm={searchTerm}
+        searchHandler={getSearchTerm}
+      />
+      <b className="places__found">{items.length} order in `{activeTabName}` group</b>
       <ul className="cities__places-list places__list tabs__content">
         {state.slicedItems.map((order) => (
           <Order

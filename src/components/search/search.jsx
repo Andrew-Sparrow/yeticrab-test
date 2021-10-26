@@ -1,8 +1,19 @@
-import React, {useState} from 'react';
+import React from 'react';
 
-const Search = () => {
+const Search = (props) => {
+  const {
+    searchHandler,
+    searchInputElement
+  } = props;
+
   return (
-    <input type="search" placeholder="Search" className="search"/>
+    <input
+      ref={searchInputElement}
+      type="search"
+      placeholder="Search"
+      className="search"
+      onChange={searchHandler}
+    />
   );
 };
 

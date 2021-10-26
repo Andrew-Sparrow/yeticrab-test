@@ -13,7 +13,6 @@ import {getIsFormSendedSuccessfully} from '../../store/form/selectors';
 import { getIsFormEditedSuccessfully } from '../../store/form/selectors';
 import SuccessMessage from '../success-message/success-message';
 import SuccessMessageEdit from '../success-message-edit/success-message-edit';
-import Search from '../search/search';
 
 function Main() {
   const activeGroupName = useSelector(getActiveGroupName);
@@ -38,14 +37,11 @@ function Main() {
                 <section className="cities__places places">
                   <h2 className="visually-hidden">Orders</h2>
                   <NewItemButton />
-                  <Search />
-                  <b className="places__found">{filteredOrders.length} order in `{activeGroupName}` group</b>
                   <OrdersList
                     items={filteredOrders}
-                    // first page number
-                    initialPageNumber={0}
+                    initialPageNumber={0} // first page number
                     activeTabName={activeGroupName}
-                    activeBooks={filteredOrders}
+                    activeOrders={filteredOrders}
                   />
                 </section>
               </div>
