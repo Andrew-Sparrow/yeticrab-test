@@ -22,21 +22,11 @@ function OrdersList(props) {
   } = props;
 
   const [searchTerm, setSearchTerm] = useState('');
+
   const [searchResults, setSearchResults] = useState([]);
+  console.log(searchResults);
+  
   const inputSearchElement = useRef('');
-
-  const getSearchTerm = () => {
-    setSearchTerm(inputSearchElement.current.value);
-
-    if (searchTerm !== '') {
-      const newOrderList = items.filter((order) => {
-        return order.company.toLowerCase().includes(searchTerm.toLowerCase());
-      });
-      setSearchResults(newOrderList);
-    } else {
-      setSearchResults(items);
-    }
-  };
 
   const selectedItemsOnFirstPage = items.slice(0, ITEMS_PER_PAGE);
   const pagesTotalAmount = Math.ceil(items.length / ITEMS_PER_PAGE);
@@ -46,9 +36,22 @@ function OrdersList(props) {
   const init = (initialPageNumber) => {
     return {
       pageNumber: initialPageNumber,
-      slicedItems: slicedItems
+      slicedItems: selectedItemsOnFirstPage
     };
   }
+
+  const getSearchTerm = () => {
+    setSearchTerm(inputSearchElement.current.value);
+
+    if (searchTerm !== '') {
+      const newOrderList = slicedItems.filter((order) => {
+        return order.company.toLowerCase().includes(searchTerm.toLowerCase());
+      });
+      setSearchResults(newOrderList);
+    } else {
+      setSearchResults(slicedItems);
+    }
+  };
 
   const reducer = (state, action) => {
     switch (action.type) {
