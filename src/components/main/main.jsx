@@ -38,10 +38,9 @@ function Main() {
                   <h2 className="visually-hidden">Orders</h2>
                   <NewItemButton />
                   <OrdersList
-                    items={filteredOrders}
+                    orders={filteredOrders}
                     initialPageNumber={0} // first page number
                     activeTabName={activeGroupName}
-                    activeOrders={filteredOrders}
                   />
                 </section>
               </div>

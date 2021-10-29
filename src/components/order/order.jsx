@@ -6,7 +6,7 @@ import {Link} from 'react-router-dom';
 import {addToFavoriteApi, deleteItemApi} from '../../store/api-actions';
 
 function Order(props) {
-  const {
+  let {
     id,
     company,
     date,

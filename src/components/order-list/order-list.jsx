@@ -12,17 +12,20 @@ const ITEMS_PER_PAGE = 3;
 
 function OrdersList(props) {
   const {
-    items,
+    orders,
     initialPageNumber,
     activeTabName,
   } = props;
+
+  console.log('orders', orders);
 
   const Actions = {
     CHANGE_PAGE_NUMBER: 'changePageNumber',
     CHANGE_SLICED_ITEMS_ON_PAGE: 'changeSlicedItemsOnPage',
     CHANGE_SEARCH_RESULTS: 'changeSearchResults',
     CHANGE_SEARCH_TERM: 'changeSearchTerm',
-    CHANGE_PAGES_TOTAL_AMOUNT: 'changePagesTotalAmount'
+    CHANGE_PAGES_TOTAL_AMOUNT: 'changePagesTotalAmount',
+    INIT: 'init'
   };
 
   const inputSearchElement = useRef('');
@@ -38,41 +41,12 @@ function OrdersList(props) {
   const init = (initialPageNumber) => {
     return {
       pageNumber: initialPageNumber,
-      slicedItems: getSlicedItemsOnPage(items),
-      searchResults: items,
+      slicedItems: getSlicedItemsOnPage(orders),
+      searchResults: orders,
       searchTerm: '',
-      pagesTotalAmount: getPagesTotalAmount(items)
+      pagesTotalAmount: getPagesTotalAmount(orders)
     };
   }
-
-  const getSearchTerm = () => {
-    const searchValue = inputSearchElement.current.value.toLowerCase().trim();
-    dispatch({type: Actions.CHANGE_SEARCH_TERM, payload: searchValue})
-
-    if (searchValue !== '') {
-      const newOrderList = items.filter((order) => {
-        return order.company.toLowerCase().includes(searchValue);
-      });
-
-      dispatch({type: Actions.CHANGE_SEARCH_RESULTS, payload: newOrderList});
-      console.log(newOrderList);
-
-      const slicedItemsOnPage = getSlicedItemsOnPage(newOrderList);
-
-      dispatch({type: Actions.CHANGE_SLICED_ITEMS_ON_PAGE, payload: slicedItemsOnPage});
-
-      const totalPageAmount = getPagesTotalAmount(newOrderList);
-      dispatch({type: Actions.CHANGE_PAGES_TOTAL_AMOUNT, payload: totalPageAmount});
-    } else {
-      dispatch({type: Actions.CHANGE_SEARCH_RESULTS, payload: items});
-
-      const slicedItemsOnPage = getSlicedItemsOnPage(items);
-      dispatch({type: Actions.CHANGE_SLICED_ITEMS_ON_PAGE, payload: slicedItemsOnPage});
-
-      const totalPageAmount = getPagesTotalAmount(items);
-      dispatch({type: Actions.CHANGE_PAGES_TOTAL_AMOUNT, payload: totalPageAmount});
-    }
-  };
 
   const reducer = (state, action) => {
     switch (action.type) {
@@ -86,12 +60,45 @@ function OrdersList(props) {
         return {...state, searchTerm: action.payload};
       case Actions.CHANGE_PAGES_TOTAL_AMOUNT:
         return {...state, pagesTotalAmount: action.payload};
+      case Actions.INIT:
+        return init(action.payload);
       default:
         throw new Error('There is no such action type !!!');
     }
   }
 
   const [state, dispatch] = useReducer(reducer, initialPageNumber, init);
+
+  // dispatch({type: Actions.INIT, payload: initialPageNumber});
+
+  const getSearchTerm = () => {
+    const searchValue = inputSearchElement.current.value.toLowerCase().trim();
+    dispatch({type: Actions.CHANGE_SEARCH_TERM, payload: searchValue})
+
+    if (searchValue !== '') {
+      const newOrderList = orders.filter((order) => {
+        return order.company.toLowerCase().includes(searchValue);
+      });
+
+      dispatch({type: Actions.CHANGE_SEARCH_RESULTS, payload: newOrderList});
+
+      const slicedItemsOnPage = getSlicedItemsOnPage(newOrderList);
+      dispatch({type: Actions.CHANGE_SLICED_ITEMS_ON_PAGE, payload: slicedItemsOnPage});
+
+      const totalPageAmount = getPagesTotalAmount(newOrderList);
+      dispatch({type: Actions.CHANGE_PAGES_TOTAL_AMOUNT, payload: totalPageAmount});
+    } else {
+      dispatch({type: Actions.CHANGE_SEARCH_RESULTS, payload: orders});
+
+      const slicedItemsOnPage = getSlicedItemsOnPage(orders);
+      dispatch({type: Actions.CHANGE_SLICED_ITEMS_ON_PAGE, payload: slicedItemsOnPage});
+
+      const totalPageAmount = getPagesTotalAmount(orders);
+      dispatch({type: Actions.CHANGE_PAGES_TOTAL_AMOUNT, payload: totalPageAmount});
+    }
+  };
+
+  console.log('state.slicedItems', state.slicedItems);
 
   const pageNumberClickHandler = (dataPagination) => {
     let offset = Math.ceil(dataPagination.selected * ITEMS_PER_PAGE);
@@ -106,7 +113,7 @@ function OrdersList(props) {
         searchInputElement={inputSearchElement}
         searchHandler={getSearchTerm}
       />
-      <b className="places__found">{items.length} order in `{activeTabName}` group</b>
+      <b className="places__found">{orders.length} order in `{activeTabName}` group</b>
       <ul className="cities__places-list places__list tabs__content">
         {state.slicedItems.map((order) => (
           <Order
