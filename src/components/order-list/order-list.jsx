@@ -1,4 +1,4 @@
-import React, {useReducer, useEffect, useState, useRef} from 'react';
+import React, {useReducer, useRef} from 'react';
 import {Fragment} from 'react';
 import PropTypes from 'prop-types';
 
@@ -8,86 +8,119 @@ import Search from '../search/search';
 import contactProp from '../order/order.prop';
 import Pagination from '../pagination/pagination';
 
-const FIRST_PAGE_NUMBER = 0; // the initialPageNumber starts with zero
+// const FIRST_PAGE_NUMBER = 0; // the initialPageNumber starts with zero
 const ITEMS_PER_PAGE = 3;
-let prevTabName = '';
-let prevBooks = [];
+// let prevTabName = '';
+// let prevOrders = [];
 
 function OrdersList(props) {
   const {
     items,
     initialPageNumber,
     activeTabName,
-    activeOrders
+    // activeOrders
   } = props;
 
-  const [searchTerm, setSearchTerm] = useState('');
+  const Actions = {
+    CHANGE_PAGE_NUMBER: 'changePageNumber',
+    CHANGE_SLICED_ITEMS_ON_PAGE: 'changeSlicedItemsOnPage',
+    CHANGE_SEARCH_RESULTS: 'changeSearchResults',
+    CHANGE_SEARCH_TERM: 'changeSearchTerm',
+    CHANGE_PAGES_TOTAL_AMOUNT: 'changePagesTotalAmount'
+  };
 
-  const [searchResults, setSearchResults] = useState([]);
-  console.log(searchResults);
-  
   const inputSearchElement = useRef('');
 
-  const selectedItemsOnFirstPage = items.slice(0, ITEMS_PER_PAGE);
-  const pagesTotalAmount = Math.ceil(items.length / ITEMS_PER_PAGE);
+  const getSlicedItemsOnPage = (items) => {
+    return items.slice(0, ITEMS_PER_PAGE);
+  };
 
-  let slicedItems = selectedItemsOnFirstPage;
+  const getPagesTotalAmount = (items) => {
+    return Math.ceil(items.length / ITEMS_PER_PAGE);
+  };
 
   const init = (initialPageNumber) => {
     return {
       pageNumber: initialPageNumber,
-      slicedItems: selectedItemsOnFirstPage
+      slicedItems: getSlicedItemsOnPage(items),
+      searchResults: items,
+      searchTerm: '',
+      pagesTotalAmount: getPagesTotalAmount(items)
     };
   }
 
   const getSearchTerm = () => {
-    setSearchTerm(inputSearchElement.current.value);
+    const searchValue = inputSearchElement.current.value.toLowerCase().trim();
+    dispatch({type: Actions.CHANGE_SEARCH_TERM, payload: searchValue})
 
-    if (searchTerm !== '') {
-      const newOrderList = slicedItems.filter((order) => {
-        return order.company.toLowerCase().includes(searchTerm.toLowerCase());
+    if (searchValue !== '') {
+      const newOrderList = items.filter((order) => {
+        return order.company.toLowerCase().includes(searchValue);
       });
-      setSearchResults(newOrderList);
+
+      dispatch({type: Actions.CHANGE_SEARCH_RESULTS, payload: newOrderList});
+      console.log(newOrderList);
+
+      const slicedItemsOnPage = getSlicedItemsOnPage(newOrderList);
+
+      dispatch({type: Actions.CHANGE_SLICED_ITEMS_ON_PAGE, payload: slicedItemsOnPage});
+      // console.log(state.slicedItems);
+
+      const totalPageAmount = getPagesTotalAmount(newOrderList);
+      dispatch({type: Actions.CHANGE_PAGES_TOTAL_AMOUNT, payload: totalPageAmount});
     } else {
-      setSearchResults(slicedItems);
+      dispatch({type: Actions.CHANGE_SEARCH_RESULTS, payload: items});
+
+      const slicedItemsOnPage = getSlicedItemsOnPage(items);
+      dispatch({type: Actions.CHANGE_SLICED_ITEMS_ON_PAGE, payload: slicedItemsOnPage});
+
+      const totalPageAmount = getPagesTotalAmount(items);
+      dispatch({type: Actions.CHANGE_PAGES_TOTAL_AMOUNT, payload: totalPageAmount});
     }
   };
 
   const reducer = (state, action) => {
     switch (action.type) {
-      case 'changePageNumber':
+      case Actions.CHANGE_PAGE_NUMBER:
         return {...state, pageNumber: action.payload};
-      case 'changeSlicedItems':
+      case Actions.CHANGE_SLICED_ITEMS_ON_PAGE:
         return {...state, slicedItems: action.payload};
+      case Actions.CHANGE_SEARCH_RESULTS:
+        return {...state, searchResults: action.payload};
+      case Actions.CHANGE_SEARCH_TERM:
+        return {...state, searchTerm: action.payload};
+      case Actions.CHANGE_PAGES_TOTAL_AMOUNT:
+        return {...state, pagesTotalAmount: action.payload};
       default:
-        throw new Error();
+        throw new Error('There is no such action type !!!');
     }
   }
 
   const [state, dispatch] = useReducer(reducer, initialPageNumber, init);
 
-  useEffect(() => {
-    if (prevTabName !== activeTabName || prevBooks !== activeOrders) {
-      dispatch({type: 'changeSlicedItems', payload: []});
-      dispatch({type: 'changeSlicedItems', payload: slicedItems});
-      dispatch({type: 'changePageNumber', payload: FIRST_PAGE_NUMBER});
-    }
-    prevTabName = activeTabName;
-    prevBooks = activeOrders;
-  }, [activeTabName, slicedItems, activeOrders]);
+  // useEffect(() => {
+  //   if (prevTabName !== activeTabName || prevOrders !== activeOrders) {
+  //     dispatch({type: 'changeSlicedItems', payload: []});
+  //     dispatch({type: 'changeSlicedItems', payload: slicedItems});
+  //     dispatch({type: 'changePageNumber', payload: FIRST_PAGE_NUMBER});
+  //   }
+  //   prevTabName = activeTabName;
+  //   prevOrders = activeOrders;
+  // }, [activeTabName, slicedItems, activeOrders]);
 
   const pageNumberClickHandler = (dataPagination) => {
     let offset = Math.ceil(dataPagination.selected * ITEMS_PER_PAGE);
-    slicedItems = items.slice(offset, offset + ITEMS_PER_PAGE);
-    dispatch({type: 'changePageNumber', payload: dataPagination.selected});
-    dispatch({type: 'changeSlicedItems', payload: slicedItems});
+    const itemsOnPage = state.searchResults.slice(offset, offset + ITEMS_PER_PAGE);
+    // dispatch({type: 'changePageNumber', payload: dataPagination.selected});
+    dispatch({type: Actions.CHANGE_PAGE_NUMBER, payload: dataPagination.selected});
+    // dispatch({type: 'changeSlicedItems', payload: itemsOnPage});
+    dispatch({type: Actions.CHANGE_SLICED_ITEMS_ON_PAGE, payload: itemsOnPage});
   };
 
   return (
     <Fragment>
       <Search
         searchInputElement={inputSearchElement}
-        searchTerm={searchTerm}
         searchHandler={getSearchTerm}
       />
       <b className="places__found">{items.length} order in `{activeTabName}` group</b>
@@ -109,8 +142,8 @@ function OrdersList(props) {
         ))}
       </ul>
       {/* comparison was added to don't show pagination if there are too little amount of items in list */}
-      {items.length > ITEMS_PER_PAGE && <Pagination
-        pageCount={pagesTotalAmount}
+      {state.searchResults.length > ITEMS_PER_PAGE && <Pagination
+        pageCount={state.pagesTotalAmount}
         onPageNumberClick={pageNumberClickHandler}
         forcePage={state.pageNumber}
       />}
