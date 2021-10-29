@@ -8,17 +8,13 @@ import Search from '../search/search';
 import contactProp from '../order/order.prop';
 import Pagination from '../pagination/pagination';
 
-// const FIRST_PAGE_NUMBER = 0; // the initialPageNumber starts with zero
 const ITEMS_PER_PAGE = 3;
-// let prevTabName = '';
-// let prevOrders = [];
 
 function OrdersList(props) {
   const {
     items,
     initialPageNumber,
     activeTabName,
-    // activeOrders
   } = props;
 
   const Actions = {
@@ -64,7 +60,6 @@ function OrdersList(props) {
       const slicedItemsOnPage = getSlicedItemsOnPage(newOrderList);
 
       dispatch({type: Actions.CHANGE_SLICED_ITEMS_ON_PAGE, payload: slicedItemsOnPage});
-      // console.log(state.slicedItems);
 
       const totalPageAmount = getPagesTotalAmount(newOrderList);
       dispatch({type: Actions.CHANGE_PAGES_TOTAL_AMOUNT, payload: totalPageAmount});
@@ -98,22 +93,10 @@ function OrdersList(props) {
 
   const [state, dispatch] = useReducer(reducer, initialPageNumber, init);
 
-  // useEffect(() => {
-  //   if (prevTabName !== activeTabName || prevOrders !== activeOrders) {
-  //     dispatch({type: 'changeSlicedItems', payload: []});
-  //     dispatch({type: 'changeSlicedItems', payload: slicedItems});
-  //     dispatch({type: 'changePageNumber', payload: FIRST_PAGE_NUMBER});
-  //   }
-  //   prevTabName = activeTabName;
-  //   prevOrders = activeOrders;
-  // }, [activeTabName, slicedItems, activeOrders]);
-
   const pageNumberClickHandler = (dataPagination) => {
     let offset = Math.ceil(dataPagination.selected * ITEMS_PER_PAGE);
     const itemsOnPage = state.searchResults.slice(offset, offset + ITEMS_PER_PAGE);
-    // dispatch({type: 'changePageNumber', payload: dataPagination.selected});
     dispatch({type: Actions.CHANGE_PAGE_NUMBER, payload: dataPagination.selected});
-    // dispatch({type: 'changeSlicedItems', payload: itemsOnPage});
     dispatch({type: Actions.CHANGE_SLICED_ITEMS_ON_PAGE, payload: itemsOnPage});
   };
 
