@@ -39,7 +39,6 @@ function Main() {
                   <NewItemButton />
                   <OrdersList
                     orders={filteredOrders}
-                    initialPageNumber={0} // first page number
                     activeTabName={activeGroupName}
                   />
                 </section>
