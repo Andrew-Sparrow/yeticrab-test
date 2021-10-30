@@ -1,9 +1,13 @@
 import React, {useReducer, useRef, useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+
 import {Fragment} from 'react';
 import PropTypes from 'prop-types';
 
 import Order from '../order/order';
 import Search from '../search/search';
+import {getPageNumber} from '../../store/page/selectors';
+import {getSearchResults} from '../../store/search/selectors';
 
 import contactProp from '../order/order.prop';
 import Pagination from '../pagination/pagination';
@@ -18,6 +22,9 @@ function OrdersList(props) {
   } = props;
 
   console.log('orders', orders);
+  const dispatch = useDispatch();
+  const pageNumber = useSelector(getPageNumber);
+  const searchResults = useSelector(getSearchResults);
 
   const Actions = {
     CHANGE_PAGE_NUMBER: 'changePageNumber',
@@ -40,6 +47,8 @@ function OrdersList(props) {
   };
 
   const pagesTotalAmount = getPagesTotalAmount(orders);
+
+  console.log('pagesTotalAmount', pagesTotalAmount);
 
   const initialState = {
     pageNumber: INITIAL_PAGE_NUMBER,
@@ -68,8 +77,8 @@ function OrdersList(props) {
     }
   }
 
-  const [state, dispatch] = useReducer(reducer, initialState);
-  console.log('state.slicedItems', state.slicedItems);
+  // const [state, dispatch] = useReducer(reducer, initialState);
+  // console.log('state.slicedItems', state.slicedItems);
 
   // useEffect(() => {
   //   const slicedItemsOnPage = getSlicedItemsOnPage(state.slicedItems);
@@ -108,7 +117,7 @@ function OrdersList(props) {
 
   const pageNumberClickHandler = (dataPagination) => {
     let offset = Math.ceil(dataPagination.selected * ITEMS_PER_PAGE);
-    const itemsOnPage = state.searchResults.slice(offset, offset + ITEMS_PER_PAGE);
+    const itemsOnPage = searchResults.slice(offset, offset + ITEMS_PER_PAGE);
     dispatch({type: Actions.CHANGE_PAGE_NUMBER, payload: dataPagination.selected});
     dispatch({type: Actions.CHANGE_SLICED_ITEMS_ON_PAGE, payload: itemsOnPage});
   };
@@ -138,10 +147,10 @@ function OrdersList(props) {
         ))}
       </ul>
       {/* comparison was added to don't show pagination if there are too little amount of items in list */}
-      {state.searchResults.length > ITEMS_PER_PAGE && <Pagination
-        pageCount={state.pagesTotalAmount}
+      {orders.length > ITEMS_PER_PAGE && <Pagination
+        pageCount={pagesTotalAmount}
         onPageNumberClick={pageNumberClickHandler}
-        forcePage={state.pageNumber}
+        forcePage={pageNumber}
       />}
     </ Fragment>
   );
