@@ -1,10 +1,10 @@
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {
   changePageNumber,
-  changeSlicedItemsOnPage,
-  changeSearchResults
+  changeSearchResults,
+  changeSearchTerm
 } from '../../store/actions';
 
 import {Fragment} from 'react';
@@ -29,23 +29,23 @@ const ITEMS_PER_PAGE = 3;
 
 function OrdersList(props) {
   const {orders} = props;
+  const [searchResults, setSearchResults] = useState(orders);
 
   const dispatch = useDispatch();
 
   const activeTabName = useSelector(getActiveTabName);
-  console.log(orders);
 
   const pageNumber = useSelector(getPageNumber);
-  const searchResults = useSelector(getSearchResults);
-  const slicedItemsOnPage = useSelector(getSlicedItemsOnPage);
+  // const searchResults = useSelector(getSearchResults);
+  // const slicedItemsOnPage = useSelector(getSlicedItemsOnPage);
 
-  const Actions = {
-    CHANGE_PAGE_NUMBER: 'changePageNumber',
-    CHANGE_SLICED_ITEMS_ON_PAGE: 'changeSlicedItemsOnPage',
-    CHANGE_SEARCH_RESULTS: 'changeSearchResults',
-    CHANGE_SEARCH_TERM: 'changeSearchTerm',
-    CHANGE_PAGES_TOTAL_AMOUNT: 'changePagesTotalAmount',
-  };
+  // const Actions = {
+  //   CHANGE_PAGE_NUMBER: 'changePageNumber',
+  //   CHANGE_SLICED_ITEMS_ON_PAGE: 'changeSlicedItemsOnPage',
+  //   CHANGE_SEARCH_RESULTS: 'changeSearchResults',
+  //   CHANGE_SEARCH_TERM: 'changeSearchTerm',
+  //   CHANGE_PAGES_TOTAL_AMOUNT: 'changePagesTotalAmount',
+  // };
 
   const inputSearchElement = useRef('');
 
@@ -53,48 +53,16 @@ function OrdersList(props) {
     dispatch(changeSearchResults(items));
     let offset = Math.ceil(pageNumber * ITEMS_PER_PAGE);
     const itemsOnPage = items.slice(offset, offset + ITEMS_PER_PAGE);
-
-    // dispatch(changeSlicedItemsOnPage(itemsOnPage));
-    // dispatch(changeSlicedItemsOnPage(slicedItems))
     return itemsOnPage;
   };
 
-  const displayedItemsOnPage = getDisplayedItemsOnPage(orders, pageNumber);
+  const displayedItemsOnPage = getDisplayedItemsOnPage(searchResults, pageNumber);
 
   const getPagesTotalAmount = (items) => {
     return Math.ceil(items.length / ITEMS_PER_PAGE);
   };
 
-  const pagesTotalAmount = getPagesTotalAmount(orders);
-
-  // const initialState = {
-  //   pageNumber: INITIAL_PAGE_NUMBER,
-  //   slicedItems: orders,
-  //   // slicedItems: getSlicedItemsOnFirstPage(orders),
-  //   searchResults: orders,
-  //   searchTerm: '',
-  //   pagesTotalAmount: getPagesTotalAmount(orders)
-  // };
-
-  // const reducer = (state, action) => {
-  //   switch (action.type) {
-  //     case Actions.CHANGE_SLICED_ITEMS_ON_PAGE:
-  //       return {...state, slicedItems: action.payload};
-  //     case Actions.CHANGE_SEARCH_RESULTS:
-  //       return {...state, searchResults: action.payload};
-  //     case Actions.CHANGE_SEARCH_TERM:
-  //       return {...state, searchTerm: action.payload};
-  //     case Actions.CHANGE_PAGE_NUMBER:
-  //       return {...state, pageNumber: action.payload};
-  //     case Actions.CHANGE_PAGES_TOTAL_AMOUNT:
-  //       return {...state, pagesTotalAmount: action.payload};
-  //     default:
-  //       throw new Error('There is no such action type !!!');
-  //   }
-  // }
-
-  // const [state, dispatch] = useReducer(reducer, initialState);
-  // console.log('state.slicedItems', state.slicedItems);
+  const pagesTotalAmount = getPagesTotalAmount(searchResults);
 
   // useEffect(() => {
   //   const slicedItemsOnPage = getSlicedItemsOnPage(state.slicedItems);
@@ -104,30 +72,44 @@ function OrdersList(props) {
   //   dispatch({type: Actions.CHANGE_PAGES_TOTAL_AMOUNT, payload: totalPageAmount});
   // }, []);
 
+  // const getSearchTerm = () => {
+  //   const searchValue = inputSearchElement.current.value.toLowerCase().trim();
+  //   dispatch(changeSearchTerm(searchValue));
+
+  //   if (searchValue !== '') {
+  //     const newOrderList = orders.filter((order) => {
+  //       return order.company.toLowerCase().includes(searchValue);
+  //     });
+
+  //     dispatch(changeSearchResults(newOrderList));
+
+  //     const slicedItemsOnPage = getSlicedItemsOnPage(newOrderList);
+  //     dispatch({type: Actions.CHANGE_SLICED_ITEMS_ON_PAGE, payload: slicedItemsOnPage});
+
+  //     const totalPageAmount = getPagesTotalAmount(newOrderList);
+  //     dispatch({type: Actions.CHANGE_PAGES_TOTAL_AMOUNT, payload: totalPageAmount});
+  //   } else {
+  //     dispatch({type: Actions.CHANGE_SEARCH_RESULTS, payload: orders});
+
+  //     const slicedItemsOnPage = getSlicedItemsOnPage(orders);
+  //     dispatch({type: Actions.CHANGE_SLICED_ITEMS_ON_PAGE, payload: slicedItemsOnPage});
+
+  //     const totalPageAmount = getPagesTotalAmount(orders);
+  //     dispatch({type: Actions.CHANGE_PAGES_TOTAL_AMOUNT, payload: totalPageAmount});
+  //   }
+  // };
+
   const getSearchTerm = () => {
     const searchValue = inputSearchElement.current.value.toLowerCase().trim();
-    dispatch({type: Actions.CHANGE_SEARCH_TERM, payload: searchValue})
+    dispatch(changeSearchTerm(searchValue));
 
     if (searchValue !== '') {
       const newOrderList = orders.filter((order) => {
         return order.company.toLowerCase().includes(searchValue);
       });
-
-      dispatch({type: Actions.CHANGE_SEARCH_RESULTS, payload: newOrderList});
-
-      const slicedItemsOnPage = getSlicedItemsOnPage(newOrderList);
-      dispatch({type: Actions.CHANGE_SLICED_ITEMS_ON_PAGE, payload: slicedItemsOnPage});
-
-      const totalPageAmount = getPagesTotalAmount(newOrderList);
-      dispatch({type: Actions.CHANGE_PAGES_TOTAL_AMOUNT, payload: totalPageAmount});
+      setSearchResults(newOrderList);
     } else {
-      dispatch({type: Actions.CHANGE_SEARCH_RESULTS, payload: orders});
-
-      const slicedItemsOnPage = getSlicedItemsOnPage(orders);
-      dispatch({type: Actions.CHANGE_SLICED_ITEMS_ON_PAGE, payload: slicedItemsOnPage});
-
-      const totalPageAmount = getPagesTotalAmount(orders);
-      dispatch({type: Actions.CHANGE_PAGES_TOTAL_AMOUNT, payload: totalPageAmount});
+      setSearchResults(orders);
     }
   };
 
@@ -160,7 +142,7 @@ function OrdersList(props) {
         ))}
       </ul>
       {/* comparison was added to don't show pagination if there are too little amount of items in list */}
-      {orders.length > ITEMS_PER_PAGE && <Pagination
+      {searchResults.length > ITEMS_PER_PAGE && <Pagination
         pageCount={pagesTotalAmount}
         onPageNumberClick={pageNumberClickHandler}
         forcePage={pageNumber}

@@ -10,7 +10,7 @@ const Search = (props) => {
     <input
       ref={searchInputElement}
       type="search"
-      placeholder="Search"
+      placeholder="Search By Company Name"
       className="search"
       onChange={searchHandler}
     />
