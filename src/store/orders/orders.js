@@ -2,7 +2,7 @@ import {createReducer} from '@reduxjs/toolkit';
 import Util from '../../util/util';
 
 import {
-  changeGroup,
+  changeTab,
   loadOrdersAction,
   addNewOrderAction,
   changeFavoriteAction,
@@ -13,13 +13,13 @@ import {
 const initialState = {
   orders: [],
   isDataLoaded: false,
-  activeGroupName: 'All',
+  activeTabName: 'All',
 };
 
 const orders = createReducer(initialState, (builder) => {
   builder
-    .addCase(changeGroup, (state, action) => {
-      state.activeGroupName = action.payload;
+    .addCase(changeTab, (state, action) => {
+      state.activeTabName = action.payload;
     })
     .addCase(loadOrdersAction, (state, action) => {
       state.orders = action.payload;

@@ -3,16 +3,16 @@ import {Link} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
 
 import {groupList} from '../../const';
-import {changeGroup} from '../../store/actions';
-import {getActiveGroupName} from '../../store/orders/selectors';
+import {changeTab} from '../../store/actions';
+import {getActiveTabName} from '../../store/orders/selectors';
 
 function Tabs(props) {
-  const activeGroupName = useSelector(getActiveGroupName);
+  const activeTabName = useSelector(getActiveTabName);
   const dispatch = useDispatch();
 
   const handleTabClick = (evt) => {
     evt.preventDefault();
-    dispatch(changeGroup(evt.currentTarget.dataset.group));
+    dispatch(changeTab(evt.currentTarget.dataset.group));
   };
 
   return (
@@ -23,7 +23,7 @@ function Tabs(props) {
             <li className="locations__item" key={group}>
               <Link
                 data-group={group}
-                className={`locations__item-link tabs__item ${ group === activeGroupName && 'tabs__item--active' }`}
+                className={`locations__item-link tabs__item ${ group === activeTabName && 'tabs__item--active' }`}
                 to="#"
                 onClick={handleTabClick}
               >

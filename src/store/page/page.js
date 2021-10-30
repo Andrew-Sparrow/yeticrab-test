@@ -6,7 +6,8 @@ import Util from '../../util/util';
 
 import {
   changePageNumber,
-  changePagesTotalAmount
+  changePagesTotalAmount,
+  changeSlicedItemsOnPage
 } from '../actions';
 
 const ITEMS_PER_PAGE = 3;
@@ -39,6 +40,9 @@ const page = createReducer(initialState, (builder) => {
     })
     .addCase(changePagesTotalAmount, (state, action) => {
       state.pagesTotalAmount = action.payload;
+    })
+    .addCase(changeSlicedItemsOnPage, (state, action) => {
+      state.slicedItems = action.payload;
     })
     // .addDefaultCase(() => {
     //   throw new Error('There is no such action type !!!');

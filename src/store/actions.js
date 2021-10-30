@@ -51,7 +51,7 @@ export const changePagesTotalAmount = createAction(
   (pagesTotalAmount) => ({payload: pagesTotalAmount}),
 );
 
-export const changesSlicedItemsOnPage = createAction(
+export const changeSlicedItemsOnPage = createAction(
   ActionType.CHANGE_SLICED_ITEMS_ON_PAGE,
   (slicedItems) => ({payload: slicedItems}),
 );
@@ -76,7 +76,7 @@ export const showErrorFormMessage = createAction(
   (isShowErrorMessage, errorMessageText) => ({payload: {isShowErrorMessage, errorMessageText}}),
 );
 
-export const changeGroup = createAction(
+export const changeTab = createAction(
   ActionType.CHANGE_GROUP,
   (groupName) => ({payload: groupName})
 );

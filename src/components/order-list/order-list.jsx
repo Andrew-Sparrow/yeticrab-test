@@ -1,30 +1,43 @@
-import React, {useReducer, useRef, useEffect} from 'react';
+import React, {useRef} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
+
+import {
+  changePageNumber,
+  changeSlicedItemsOnPage,
+  changeSearchResults
+} from '../../store/actions';
 
 import {Fragment} from 'react';
 import PropTypes from 'prop-types';
 
 import Order from '../order/order';
 import Search from '../search/search';
-import {getPageNumber} from '../../store/page/selectors';
+
+import {
+  getPageNumber,
+  getSlicedItemsOnPage
+} from '../../store/page/selectors';
+
+import {getActiveTabName} from '../../store/orders/selectors';
+
 import {getSearchResults} from '../../store/search/selectors';
 
 import contactProp from '../order/order.prop';
 import Pagination from '../pagination/pagination';
 
 const ITEMS_PER_PAGE = 3;
-const INITIAL_PAGE_NUMBER = 0;
 
 function OrdersList(props) {
-  const {
-    orders,
-    activeTabName,
-  } = props;
+  const {orders} = props;
 
-  console.log('orders', orders);
   const dispatch = useDispatch();
+
+  const activeTabName = useSelector(getActiveTabName);
+  console.log(orders);
+
   const pageNumber = useSelector(getPageNumber);
   const searchResults = useSelector(getSearchResults);
+  const slicedItemsOnPage = useSelector(getSlicedItemsOnPage);
 
   const Actions = {
     CHANGE_PAGE_NUMBER: 'changePageNumber',
@@ -36,11 +49,17 @@ function OrdersList(props) {
 
   const inputSearchElement = useRef('');
 
-  const getSlicedItemsOnPage = (items) => {
-    return items.slice(0, ITEMS_PER_PAGE);
+  const getDisplayedItemsOnPage = (items, pageNumber) => {
+    dispatch(changeSearchResults(items));
+    let offset = Math.ceil(pageNumber * ITEMS_PER_PAGE);
+    const itemsOnPage = items.slice(offset, offset + ITEMS_PER_PAGE);
+
+    // dispatch(changeSlicedItemsOnPage(itemsOnPage));
+    // dispatch(changeSlicedItemsOnPage(slicedItems))
+    return itemsOnPage;
   };
 
-  const displayedItemsOnPage = getSlicedItemsOnPage(orders);
+  const displayedItemsOnPage = getDisplayedItemsOnPage(orders, pageNumber);
 
   const getPagesTotalAmount = (items) => {
     return Math.ceil(items.length / ITEMS_PER_PAGE);
@@ -48,34 +67,31 @@ function OrdersList(props) {
 
   const pagesTotalAmount = getPagesTotalAmount(orders);
 
-  console.log('pagesTotalAmount', pagesTotalAmount);
+  // const initialState = {
+  //   pageNumber: INITIAL_PAGE_NUMBER,
+  //   slicedItems: orders,
+  //   // slicedItems: getSlicedItemsOnFirstPage(orders),
+  //   searchResults: orders,
+  //   searchTerm: '',
+  //   pagesTotalAmount: getPagesTotalAmount(orders)
+  // };
 
-  const initialState = {
-    pageNumber: INITIAL_PAGE_NUMBER,
-    slicedItems: getSlicedItemsOnPage(orders),
-    searchResults: orders,
-    searchTerm: '',
-    pagesTotalAmount: getPagesTotalAmount(orders)
-  };
-
-  console.log('initialState.slicedItems', initialState.slicedItems);
-
-  const reducer = (state, action) => {
-    switch (action.type) {
-      case Actions.CHANGE_SLICED_ITEMS_ON_PAGE:
-        return {...state, slicedItems: action.payload};
-      case Actions.CHANGE_SEARCH_RESULTS:
-        return {...state, searchResults: action.payload};
-      case Actions.CHANGE_SEARCH_TERM:
-        return {...state, searchTerm: action.payload};
-      case Actions.CHANGE_PAGE_NUMBER:
-        return {...state, pageNumber: action.payload};
-      case Actions.CHANGE_PAGES_TOTAL_AMOUNT:
-        return {...state, pagesTotalAmount: action.payload};
-      default:
-        throw new Error('There is no such action type !!!');
-    }
-  }
+  // const reducer = (state, action) => {
+  //   switch (action.type) {
+  //     case Actions.CHANGE_SLICED_ITEMS_ON_PAGE:
+  //       return {...state, slicedItems: action.payload};
+  //     case Actions.CHANGE_SEARCH_RESULTS:
+  //       return {...state, searchResults: action.payload};
+  //     case Actions.CHANGE_SEARCH_TERM:
+  //       return {...state, searchTerm: action.payload};
+  //     case Actions.CHANGE_PAGE_NUMBER:
+  //       return {...state, pageNumber: action.payload};
+  //     case Actions.CHANGE_PAGES_TOTAL_AMOUNT:
+  //       return {...state, pagesTotalAmount: action.payload};
+  //     default:
+  //       throw new Error('There is no such action type !!!');
+  //   }
+  // }
 
   // const [state, dispatch] = useReducer(reducer, initialState);
   // console.log('state.slicedItems', state.slicedItems);
@@ -116,10 +132,7 @@ function OrdersList(props) {
   };
 
   const pageNumberClickHandler = (dataPagination) => {
-    let offset = Math.ceil(dataPagination.selected * ITEMS_PER_PAGE);
-    const itemsOnPage = searchResults.slice(offset, offset + ITEMS_PER_PAGE);
-    dispatch({type: Actions.CHANGE_PAGE_NUMBER, payload: dataPagination.selected});
-    dispatch({type: Actions.CHANGE_SLICED_ITEMS_ON_PAGE, payload: itemsOnPage});
+    dispatch(changePageNumber(dataPagination.selected));
   };
 
   return (
