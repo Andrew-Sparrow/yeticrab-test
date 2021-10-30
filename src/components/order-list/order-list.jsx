@@ -1,11 +1,10 @@
-import React, {useRef, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import React, {
+  useRef,
+  useState,
+  useEffect
+} from 'react';
 
-import {
-  changePageNumber,
-  changeSearchResults,
-  changeSearchTerm
-} from '../../store/actions';
+import {useSelector} from 'react-redux';
 
 import {Fragment} from 'react';
 import PropTypes from 'prop-types';
@@ -13,29 +12,30 @@ import PropTypes from 'prop-types';
 import Order from '../order/order';
 import Search from '../search/search';
 
-import {
-  getPageNumber,
-} from '../../store/page/selectors';
-
 import {getActiveTabName} from '../../store/orders/selectors';
 
-import contactProp from '../order/order.prop';
+import orderProp from '../order/order.prop';
 import Pagination from '../pagination/pagination';
 
 const ITEMS_PER_PAGE = 3;
+const INITIAL_PAGE_NUMBER = 0;
 
 function OrdersList(props) {
   const {orders} = props;
-  const [searchResults, setSearchResults] = useState(orders);
 
-  const dispatch = useDispatch();
+  const [searchResults, setSearchResults] = useState(orders);
+  const [pageNumber, setPageNumber] = useState(INITIAL_PAGE_NUMBER);
+
+  useEffect(() => {
+    setSearchResults(orders);
+    setPageNumber(INITIAL_PAGE_NUMBER);
+  }, [orders]);
+
 
   const activeTabName = useSelector(getActiveTabName);
-  const pageNumber = useSelector(getPageNumber);
   const inputSearchElement = useRef('');
 
   const getDisplayedItemsOnPage = (items, pageNumber) => {
-    // dispatch(changeSearchResults(items));
     let offset = Math.ceil(pageNumber * ITEMS_PER_PAGE);
     const itemsOnPage = items.slice(offset, offset + ITEMS_PER_PAGE);
     return itemsOnPage;
@@ -51,10 +51,9 @@ function OrdersList(props) {
 
   const getSearchTerm = () => {
     const searchValue = inputSearchElement.current.value.toLowerCase().trim();
-    dispatch(changeSearchTerm(searchValue));
 
     if (searchValue !== '') {
-      const newOrderList = orders.filter((order) => {
+      const newOrderList = searchResults.filter((order) => {
         return order.company.toLowerCase().includes(searchValue);
       });
       setSearchResults(newOrderList);
@@ -64,7 +63,7 @@ function OrdersList(props) {
   };
 
   const pageNumberClickHandler = (dataPagination) => {
-    dispatch(changePageNumber(dataPagination.selected));
+    setPageNumber(dataPagination.selected);
   };
 
   return (
@@ -102,11 +101,7 @@ function OrdersList(props) {
 }
 
 OrdersList.propTypes = {
-  items: PropTypes.arrayOf(contactProp),
-  initialPageNumber: PropTypes.number,
-  activeTabName: PropTypes.string,
-  activeState: PropTypes.array,
-  onListItemHover: PropTypes.func,
+  orders: PropTypes.arrayOf(orderProp),
 };
 
 export default OrdersList;
