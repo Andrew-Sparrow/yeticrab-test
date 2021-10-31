@@ -24,6 +24,7 @@ function OrdersList(props) {
   const {orders} = props;
 
   const [searchResults, setSearchResults] = useState(orders);
+
   const [pageNumber, setPageNumber] = useState(INITIAL_PAGE_NUMBER);
 
   useEffect(() => {
@@ -36,8 +37,11 @@ function OrdersList(props) {
   const inputSearchElement = useRef('');
 
   const getDisplayedItemsOnPage = (items, pageNumber) => {
-    let offset = Math.ceil(pageNumber * ITEMS_PER_PAGE);
-    const itemsOnPage = items.slice(offset, offset + ITEMS_PER_PAGE);
+    let itemsOnPage = items;
+    if (items.length > ITEMS_PER_PAGE * pageNumber) {
+      let offset = Math.ceil(pageNumber * ITEMS_PER_PAGE);
+      itemsOnPage = items.slice(offset, offset + ITEMS_PER_PAGE);
+    }
     return itemsOnPage;
   };
 
