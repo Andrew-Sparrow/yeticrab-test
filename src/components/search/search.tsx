@@ -1,6 +1,11 @@
-import React from 'react';
+import * as React from "react";
 
-const Search = (props) => {
+interface Props {
+  searchHandler: React.ChangeEventHandler<HTMLInputElement>;
+  searchInputElement: React.LegacyRef<HTMLInputElement>;
+}
+
+const Search = (props: Props) => {
   const {
     searchHandler,
     searchInputElement
