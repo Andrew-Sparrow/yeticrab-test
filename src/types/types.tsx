@@ -1,5 +1,5 @@
 export interface IOrder {
-  id: string;
+  id: number;
   company: string;
   carrier_first_name: string;
   carrier_middle_name: string;

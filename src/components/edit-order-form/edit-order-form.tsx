@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import React, {useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {useSelector} from 'react-redux';
 import {getIsFormSending} from '../../store/form/selectors';
@@ -8,18 +8,23 @@ import { getOrders } from '../../store/orders/selectors';
 import withLayout from '../hocs/with-layout';
 import EditButton from '../edit-button/edit-button';
 import {editOrderApi} from '../../store/api-actions';
+import {IOrder} from '../../types/types';
 
 const ErrorMessage = {
   COMPANY: "Введите название компании!",
   ATI: "Введите ATI код!"
 };
 
-const NewOrderForm = (props) => {
+interface NewOrderFormProps {
+  id: string;
+};
+
+const NewOrderForm = () => {
   const dispatch = useDispatch();
-  const {id} = useParams();
+  const {id} = useParams<NewOrderFormProps>();
 
   const orders = useSelector(getOrders);
-  const order = orders.find((order) => order.id === +id);
+  const order = orders.find((order: IOrder) => order.id === +id);
 
   const [formData, setFormData] = useState({
     'company': order.company,
@@ -33,14 +38,14 @@ const NewOrderForm = (props) => {
     'favorite': order.favorite
   });
 
-  const [formErrors, setFormErrors] = useState({
-    company: null,
-    ati: null
+  const [formErrors, setFormErrors] = useState<{company: string; ati: string;}>({
+    company: '',
+    ati: ''
   });
 
   const isFormLoading = useSelector(getIsFormSending);
 
-  const handleSubmit = (evt) => {
+  const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     const formErrorsValidation = isFormValid();
     setFormErrors(formErrorsValidation);
@@ -50,7 +55,11 @@ const NewOrderForm = (props) => {
   };
 
   const isFormValid = () => {
-    let errors = {};
+    let errors = {
+      company: '',
+      ati: ''
+    };
+
     if (!formData.company) {
       errors.company = ErrorMessage.COMPANY;
     }
@@ -60,7 +69,7 @@ const NewOrderForm = (props) => {
     return errors;
   };
 
-  const handleInputChange = (evt) => {
+  const handleInputChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     const target = evt.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;

@@ -12,7 +12,7 @@ const ErrorMessage = {
   ATI: "Введите ATI код!"
 };
 
-const NewOrderForm = (props) => {
+const NewOrderForm = () => {
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     'company': '',

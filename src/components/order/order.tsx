@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom';
 import {addToFavoriteApi, deleteItemApi} from '../../store/api-actions';
 
 interface OrderProps {
-  id: string;
+  id: number;
   company: string,
   date: string;
   carrierFirstName: string;
@@ -45,7 +45,7 @@ const Order: FC<OrderProps> = (props) =>{
   return (
     <li
       className="contact"
-      id={id}
+      id={id.toString()}
     >
       <div className="contact__right">
         <p className="contact__data">Номер заявки: <span className="contact__name">{id}</span></p>
@@ -65,7 +65,7 @@ const Order: FC<OrderProps> = (props) =>{
           </svg>
           <span className="visually-hidden">Add to bookmarks</span>
         </button>
-        <Link to={`/edit/${id}`} className="contact__bookmark-button button" id={id}>
+        <Link to={`/edit/${id}`} className="contact__bookmark-button button" id={id.toString()}>
           <button className="contact__bookmark-button button" type="button">
             <svg className="contact__edit-icon" width="30" height="30">
               <use xlinkHref="#icon-pencil"></use>
