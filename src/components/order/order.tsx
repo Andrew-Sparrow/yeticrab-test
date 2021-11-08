@@ -1,11 +1,23 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import {FC}from 'react';
 import {useDispatch} from 'react-redux';
 import {Link} from 'react-router-dom';
 
 import {addToFavoriteApi, deleteItemApi} from '../../store/api-actions';
 
-function Order(props) {
+interface OrderProps {
+  id: string;
+  company: string,
+  date: string;
+  carrierFirstName: string;
+  carrierMiddleName: string;
+  carrierLastName: string;
+  favorite: boolean;
+  phone: string;
+  comment: string;
+  ati: string;
+}
+
+const Order: FC<OrderProps> = (props) =>{
   let {
     id,
     company,
@@ -21,11 +33,11 @@ function Order(props) {
 
   const dispatch = useDispatch();
 
-  const onFavoriteClick = (evt) => {
+  const onFavoriteClick = () => {
     dispatch(addToFavoriteApi(id, !favorite));
   };
 
-  const onDeleteClick = (evt) => {
+  const onDeleteClick = (evt: any) => {
     evt.preventDefault();
     dispatch(deleteItemApi(id));
   };
@@ -48,7 +60,7 @@ function Order(props) {
       </div>
       <div className="contact__buttons">
         <button className="contact__bookmark-button button" type="button" onClick={onFavoriteClick}>
-          <svg className="contact__bookmark-icon" width="30" height="30" style={{stroke: favorite && '#4481c3'}}>
+          <svg className="contact__bookmark-icon" width="30" height="30" style={{stroke: favorite ? '#4481c3' : ''}}>
             <use xlinkHref="#icon-bookmark"></use>
           </svg>
           <span className="visually-hidden">Add to bookmarks</span>
@@ -71,10 +83,5 @@ function Order(props) {
     </li>
   );
 }
-
-Order.propTypes = {
-  'id': PropTypes.number.isRequired,
-  'company': PropTypes.string.isRequired,
-};
 
 export default Order;

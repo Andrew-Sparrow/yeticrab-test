@@ -1,26 +1,30 @@
-import React, {
+import {
   useRef,
   useState,
-  useEffect
+  useEffect,
+  FC
 } from 'react';
 
 import {useSelector} from 'react-redux';
 
 import {Fragment} from 'react';
-import PropTypes from 'prop-types';
 
 import Order from '../order/order';
 import Search from '../search/search';
 
 import {getActiveTabName} from '../../store/orders/selectors';
 
-import orderProp from '../order/order.prop';
 import Pagination from '../pagination/pagination';
+import { IOrder } from '../../types/types';
 
 const ITEMS_PER_PAGE = 3;
 const INITIAL_PAGE_NUMBER = 0;
 
-function OrdersList(props) {
+interface OrderListProps {
+  orders: IOrder[];
+};
+
+const OrdersList: FC<OrderListProps>= (props) => {
   const {orders} = props;
 
   const [searchResults, setSearchResults] = useState(orders);
@@ -34,9 +38,9 @@ function OrdersList(props) {
 
 
   const activeTabName = useSelector(getActiveTabName);
-  const inputSearchElement = useRef('');
+  const inputSearchElement = useRef<HTMLInputElement>(null);
 
-  const getDisplayedItemsOnPage = (items, pageNumber) => {
+  const getDisplayedItemsOnPage = (items: any, pageNumber: number) => {
     let itemsOnPage = items;
     if (items.length > ITEMS_PER_PAGE * pageNumber) {
       let offset = Math.ceil(pageNumber * ITEMS_PER_PAGE);
@@ -47,14 +51,14 @@ function OrdersList(props) {
 
   const displayedItemsOnPage = getDisplayedItemsOnPage(searchResults, pageNumber);
 
-  const getPagesTotalAmount = (items) => {
+  const getPagesTotalAmount = (items: IOrder[]) => {
     return Math.ceil(items.length / ITEMS_PER_PAGE);
   };
 
   const pagesTotalAmount = getPagesTotalAmount(searchResults);
 
   const getSearchTerm = () => {
-    const searchValue = inputSearchElement.current.value.toLowerCase().trim();
+    const searchValue: any = inputSearchElement.current?.value.toLowerCase().trim();
 
     if (searchValue !== '') {
       const newOrderList = searchResults.filter((order) => {
@@ -66,7 +70,7 @@ function OrdersList(props) {
     }
   };
 
-  const pageNumberClickHandler = (dataPagination) => {
+  const pageNumberClickHandler = (dataPagination: any) => {
     setPageNumber(dataPagination.selected);
   };
 
@@ -78,7 +82,7 @@ function OrdersList(props) {
       />
       <b className="places__found">{orders.length} order in `{activeTabName}` group</b>
       <ul className="cities__places-list places__list tabs__content">
-        {displayedItemsOnPage.map((order) => (
+        {displayedItemsOnPage.map((order: IOrder) => (
           <Order
             key={order.id}
             id={order.id}
@@ -103,9 +107,5 @@ function OrdersList(props) {
     </ Fragment>
   );
 }
-
-OrdersList.propTypes = {
-  orders: PropTypes.arrayOf(orderProp),
-};
 
 export default OrdersList;

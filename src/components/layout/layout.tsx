@@ -1,8 +1,14 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import {FC} from 'react';
 
-function Layout(props) {
-  const {children, className} = props;
+interface LayoutProps {
+  className: string;
+}
+
+const Layout: FC<LayoutProps> = (props) =>{
+  const {
+    children,
+    className
+  } = props;
 
   return (
     <div className={className}>
@@ -19,10 +25,5 @@ function Layout(props) {
     </ div>
   );
 }
-
-Layout.propTypes = {
-  children: PropTypes.object,
-  className: PropTypes.string,
-};
 
 export default Layout;
