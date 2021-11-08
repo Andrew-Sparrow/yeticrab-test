@@ -6,13 +6,13 @@ import {groupList} from '../../const';
 import {changeTab} from '../../store/actions';
 import {getActiveTabName} from '../../store/orders/selectors';
 
-function Tabs(props) {
+function Tabs() {
   const activeTabName = useSelector(getActiveTabName);
   const dispatch = useDispatch();
 
-  const handleTabClick = (evt) => {
+  const handleTabClick = (evt: React.MouseEvent) => {
     evt.preventDefault();
-    dispatch(changeTab(evt.currentTarget.dataset.group));
+    dispatch(changeTab(evt.currentTarget.getAttribute('data-group')));
   };
 
   return (
