@@ -1,8 +1,12 @@
-import React from 'react';
+import {FC} from 'react';
 import PropTypes from 'prop-types';
 import NewItemButton from '../new-item-button/new-item-button';
 
-function MainEmpty(props) {
+interface MainEmptyProps {
+  activeGroupName: string;
+}
+
+const MainEmpty: FC<MainEmptyProps> = (props) => {
   const {activeGroupName} = props;
 
   return (

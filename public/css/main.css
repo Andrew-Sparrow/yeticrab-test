@@ -2212,4 +2212,13 @@ img {
   border-radius: 5px;
 }
 
+.not-found {
+  margin: 'auto';
+  width: '200px';
+}
+
+.not-found__title {
+  text-align: 'center';
+}
+
 /*# sourceMappingURL=main.css.map */

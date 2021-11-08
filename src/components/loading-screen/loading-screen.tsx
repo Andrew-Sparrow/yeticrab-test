@@ -1,6 +1,6 @@
-import React from 'react';
+import {FC} from 'react';
 
-function LoadingScreen() {
+const LoadingScreen: FC = () => {
   return (
     <p className="loading">Loading...</p>
   );

@@ -1,10 +1,10 @@
-import React from 'react';
+import {FC} from 'react';
 import withLayout from '../hocs/with-layout';
 
-function NotFound() {
+const NotFound: FC = () => {
   return (
-    <div style={{margin: 'auto', width: '200px'}}>
-      <h1 style={{textAlign: 'center'}}>404</h1>
+    <div className="not-fount">
+      <h1 className="not-fount__title">404</h1>
       <h2>Page Not Found</h2>
     </div>
   );

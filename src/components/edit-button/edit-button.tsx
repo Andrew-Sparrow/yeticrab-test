@@ -1,6 +1,10 @@
-import React from 'react';
+import {FC} from "react";
 
-const EditButton = (props) => {
+interface ButtonProps {
+  isFormLoading: boolean;
+}
+
+const EditButton: FC<ButtonProps> = (props) => {
   const {isFormLoading} = props;
 
   return (

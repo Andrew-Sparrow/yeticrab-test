@@ -1,4 +1,3 @@
-import React from 'react';
 import {useSelector} from 'react-redux';
 import {Switch, Route, Router as BrowserRouter} from 'react-router-dom';
 import browserHistory from '../../browser-history';
@@ -11,7 +10,7 @@ import {getIsDataLoaded} from '../../store/orders/selectors';
 import NewOrderForm from '../new-order-form/new-order-form';
 import EditOrderForm from '../edit-order-form/edit-order-form';
 
-function App() {
+function App () {
   const isDataLoaded = useSelector(getIsDataLoaded);
 
   if (!isDataLoaded) {
