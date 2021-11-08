@@ -1,10 +1,9 @@
-import React from 'react';
 import Layout from '../layout/layout';
 
-const withLayout = (Component, className) =>
-  function wrapper(props) {
+const withLayout = (Component: any, className?: string) =>
+  function wrapper(props: any) {
     return (
-      <Layout className={className}>
+      <Layout className={className ? className : ''}>
         <Component {...props} />
       </Layout>
     );

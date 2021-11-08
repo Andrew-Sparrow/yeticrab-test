@@ -10,3 +10,15 @@ export interface IOrder {
   ati: string;
   favorite: boolean;
 }
+
+export interface IEditOrderFormData {
+  company: string;
+  date: string;
+  first_name: string;
+  middle_name: string;
+  last_name: string;
+  phone: string;
+  comment: string;
+  ati: string;
+  favorite: boolean;
+}

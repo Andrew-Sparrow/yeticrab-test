@@ -11,6 +11,7 @@ import {Fragment} from 'react';
 
 import Order from '../order/order';
 import Search from '../search/search';
+import List from '../list/list';
 
 import {getActiveTabName} from '../../store/orders/selectors';
 
@@ -82,8 +83,10 @@ const OrdersList: FC<OrderListProps>= (props) => {
         searchHandler={getSearchTerm}
       />
       <b className="places__found">{orders.length} order in `{activeTabName}` group</b>
-      <ul className="cities__places-list places__list tabs__content">
-        {displayedItemsOnPage.map((order: IOrder) => (
+      <List
+        items={displayedItemsOnPage}
+        className="cities__places-list places__list tabs__content"
+        renderItem={(order: IOrder) => (
           <Order
             key={order.id}
             id={order.id}
@@ -97,8 +100,8 @@ const OrdersList: FC<OrderListProps>= (props) => {
             comment={order.comment}
             ati={order.ati}
           />
-        ))}
-      </ul>
+        )}
+      />
       {/* comparison was added to don't show pagination if there are too little amount of items in list */}
       {searchResults.length > ITEMS_PER_PAGE && <Pagination
         pageCount={pagesTotalAmount}

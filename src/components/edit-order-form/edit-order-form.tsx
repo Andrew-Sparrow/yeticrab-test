@@ -8,7 +8,7 @@ import { getOrders } from '../../store/orders/selectors';
 import withLayout from '../hocs/with-layout';
 import EditButton from '../edit-button/edit-button';
 import {editOrderApi} from '../../store/api-actions';
-import {IOrder} from '../../types/types';
+import {IOrder, IEditOrderFormData} from '../../types/types';
 
 const ErrorMessage = {
   COMPANY: "Введите название компании!",
@@ -26,7 +26,7 @@ const NewOrderForm = () => {
   const orders = useSelector(getOrders);
   const order = orders.find((order: IOrder) => order.id === +id);
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<IEditOrderFormData>({
     'company': order.company,
     'date': order.date,
     'first_name': order.carrier_first_name,

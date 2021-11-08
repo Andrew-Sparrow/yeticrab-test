@@ -1,6 +1,10 @@
 import React from 'react';
 
-const SubmitButton = (props) => {
+interface SubmitButtonProps {
+  isFormLoading: boolean;
+};
+
+const SubmitButton = (props: SubmitButtonProps) => {
   const {isFormLoading} = props;
 
   return (
