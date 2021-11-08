@@ -71,6 +71,7 @@ const OrdersList: FC<OrderListProps>= (props) => {
   };
 
   const pageNumberClickHandler = (dataPagination: any) => {
+    console.log(dataPagination);
     setPageNumber(dataPagination.selected);
   };
 

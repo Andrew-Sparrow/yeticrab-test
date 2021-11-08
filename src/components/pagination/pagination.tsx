@@ -1,9 +1,12 @@
-import React from "react";
-import PropTypes from 'prop-types';
-
 import ReactPaginate from 'react-paginate';
 
-const Pagination = (props) => {
+interface PaginationProps {
+  pageCount: number,
+  forcePage: number;
+  onPageNumberClick: (dataPagination: {selected: number}) => void;
+};
+
+const Pagination = (props: PaginationProps) => {
   const {
     pageCount,
     onPageNumberClick,
@@ -25,12 +28,6 @@ const Pagination = (props) => {
       forcePage={forcePage}
     />
   );
-};
-
-Pagination.propTypes = {
-  pageCount: PropTypes.number.isRequired,
-  onPageNumberClick: PropTypes.func.isRequired,
-  forcePage: PropTypes.number,
 };
 
 export default Pagination;
