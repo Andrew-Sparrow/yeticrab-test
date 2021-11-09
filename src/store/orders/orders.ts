@@ -1,5 +1,6 @@
 import {createReducer} from '@reduxjs/toolkit';
 import Util from '../../util/util';
+import { IOrder } from '../../types/types';
 
 import {
   changeTab,
@@ -10,11 +11,18 @@ import {
   editOrderAction,
 } from '../actions';
 
-const initialState = {
+interface orderState {
+  orders: IOrder[],
+  isDataLoaded: boolean,
+  activeTabName: string,
+};
+
+const initialState: orderState = {
   orders: [],
   isDataLoaded: false,
   activeTabName: 'All',
 };
+
 
 const orders = createReducer(initialState, (builder) => {
   builder
