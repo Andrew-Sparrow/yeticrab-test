@@ -28,6 +28,8 @@ export type AppDispatch = AppStore['dispatch'];
 
 const store = setupStore();
 
+export type RootState = ReturnType<typeof store.getState>
+
 store.dispatch(fetchOrdersList());
 
 ReactDOM.render(

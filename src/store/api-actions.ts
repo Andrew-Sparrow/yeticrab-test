@@ -10,14 +10,14 @@ import {
   editOrderAction
 } from './actions';
 
-import {AxiosError} from 'axios';
+import {AxiosError, AxiosInstance} from 'axios';
 
 import { AppDispatch } from '..';
 
 import {APIRoute, AppRoute} from '../const';
 import {IEditOrderFormData} from '../types/types';
 
-export const fetchOrdersList = () => (dispatch: AppDispatch, _getState: any, api: any) => (
+export const fetchOrdersList = () => (dispatch: AppDispatch, _getState: any, api: AxiosInstance) => (
   api.get(APIRoute.ORDERS)
     .then(({data}: any) => {
       dispatch(loadOrdersAction(data));
@@ -25,7 +25,7 @@ export const fetchOrdersList = () => (dispatch: AppDispatch, _getState: any, api
     .catch((err: AxiosError| Error ) => {})
 );
 
-export const addToFavoriteApi = (id: number, isFavorite: boolean) => (dispatch: AppDispatch, _getState: any, api: any) => (
+export const addToFavoriteApi = (id: number, isFavorite: boolean) => (dispatch: AppDispatch, _getState: any, api: AxiosInstance) => (
   api.patch(`${ APIRoute.ORDERS }/${ id }`, {favorite: isFavorite})
     .then((info: any) => {
       dispatch(changeFavoriteAction(id, info.data.favorite));
@@ -33,7 +33,7 @@ export const addToFavoriteApi = (id: number, isFavorite: boolean) => (dispatch: 
     .catch((err: AxiosError | Error) => {})
 );
 
-export const deleteItemApi = (id: number) => (dispatch: AppDispatch, _getState: any, api: any) => (
+export const deleteItemApi = (id: number) => (dispatch: AppDispatch, _getState: any, api: AxiosInstance) => (
   api.delete(`${ APIRoute.ORDERS }/${id}`)
     .then(() => {
       dispatch(deleteItemAction(id));
@@ -41,7 +41,7 @@ export const deleteItemApi = (id: number) => (dispatch: AppDispatch, _getState: 
     .catch((err: AxiosError | Error) => {})
 );
 
-export const addNewOrderApi = (order: IEditOrderFormData) => (dispatch: AppDispatch, _getState: any, api: any) => {
+export const addNewOrderApi = (order: IEditOrderFormData) => (dispatch: AppDispatch, _getState: any, api: AxiosInstance) => {
   dispatch(changeLoadingFormProcessStatus(true));
   api.post(`${ APIRoute.ORDERS }`, {
     "company": order.company,
@@ -70,7 +70,7 @@ export const addNewOrderApi = (order: IEditOrderFormData) => (dispatch: AppDispa
     });
 };
 
-export const editOrderApi = (order: IEditOrderFormData, id: string) => (dispatch: AppDispatch, _getState: any, api: any) => {
+export const editOrderApi = (order: IEditOrderFormData, id: string) => (dispatch: AppDispatch, _getState: any, api: AxiosInstance) => {
   dispatch(changeLoadingFormProcessStatus(true));
   api.patch(`${ APIRoute.ORDERS }/${ id }`, {
     "company": order.company,
