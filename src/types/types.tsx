@@ -22,3 +22,36 @@ export interface IEditOrderFormData {
   ati: string;
   favorite: boolean;
 }
+
+export interface IChangeTabAction {
+  type: string;
+  payload: string;
+}
+
+export interface ILoadOrdersAction {
+  type: string;
+  payload: IOrder[];
+}
+
+export interface IAddNewOrderAction {
+  type: string;
+  payload: IOrder;
+}
+
+export interface IEditOrderAction {
+  type: string;
+  payload: IOrder;
+}
+
+export interface IDeleteItemAction {
+  type: string;
+  payload: number;
+}
+
+export interface IChangeFavoriteAction {
+  type: string;
+  payload: {
+    id: number;
+    favorite: boolean;
+  };
+}

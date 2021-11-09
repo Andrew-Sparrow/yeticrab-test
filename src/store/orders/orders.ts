@@ -1,6 +1,14 @@
 import {createReducer} from '@reduxjs/toolkit';
 import Util from '../../util/util';
-import { IOrder } from '../../types/types';
+import {IOrder} from '../../types/types';
+import {
+  IChangeTabAction,
+  IAddNewOrderAction,
+  IDeleteItemAction,
+  IChangeFavoriteAction,
+  ILoadOrdersAction,
+  IEditOrderAction
+} from '../../types/types';
 
 import {
   changeTab,
@@ -23,38 +31,7 @@ const initialState: OrderState = {
   activeTabName: 'All',
 };
 
-interface IChangeTabAction {
-  type: string;
-  payload: string;
-}
 
-interface ILoadOrdersAction {
-  type: string;
-  payload: IOrder[];
-}
-
-interface IAddNewOrderAction {
-  type: string;
-  payload: IOrder;
-}
-
-interface IEditOrderAction {
-  type: string;
-  payload: IOrder;
-}
-
-interface IDeleteItemAction {
-  type: string;
-  payload: number;
-}
-
-interface IChangeFavoriteAction {
-  type: string;
-  payload: {
-    id: number;
-    favorite: boolean;
-  };
-}
 
 const orders = createReducer<OrderState>(initialState, (builder) => {
   builder
