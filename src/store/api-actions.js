@@ -52,7 +52,6 @@ export const addNewOrderApi = (order) => (dispatch, _getState, api) => {
     .then((info) => {
       dispatch(addNewOrderAction(info.data));
       dispatch(changeLoadingFormProcessStatus(false));
-      // dispatch(showErrorCommentFormMessage(false));
       dispatch(changeIsFormSendedSuccessfullyStatus(true));
       setTimeout(() => dispatch(changeIsFormSendedSuccessfullyStatus(false)), 3000);
       /*
@@ -60,13 +59,9 @@ export const addNewOrderApi = (order) => (dispatch, _getState, api) => {
       and establish "isCommentFormSendedSuccessfully" to "false"
       to fix problem with save text in comment form after network error
        */
-      // dispatch(changeIsCommentSendedSuccessfullyStatus(false));
       dispatch(redirectToRoute(AppRoute.MAIN));
     })
     .catch((err) => {
-      // dispatch(showErrorCommentFormMessage(true, err.message));
-      // dispatch(changeLoadingCommentProcessStatus(false));
-      // dispatch(changeIsCommentSendedSuccessfullyStatus(false));
     });
 };
 
@@ -86,7 +81,6 @@ export const editOrderApi = (order, id) => (dispatch, _getState, api) => {
     .then((info) => {
       dispatch(editOrderAction(info.data));
       dispatch(changeLoadingFormProcessStatus(false));
-      // dispatch(showErrorCommentFormMessage(false));
       dispatch(changeIsFormEditedSuccessfullyStatus(true));
       setTimeout(() => dispatch(changeIsFormEditedSuccessfullyStatus(false)), 3000);
       /*
@@ -94,12 +88,8 @@ export const editOrderApi = (order, id) => (dispatch, _getState, api) => {
       and establish "isCommentFormSendedSuccessfully" to "false"
       to fix problem with save text in comment form after network error
        */
-      // dispatch(changeIsCommentSendedSuccessfullyStatus(false));
       dispatch(redirectToRoute(AppRoute.MAIN));
     })
     .catch((err) => {
-      // dispatch(showErrorCommentFormMessage(true, err.message));
-      // dispatch(changeLoadingCommentProcessStatus(false));
-      // dispatch(changeIsCommentSendedSuccessfullyStatus(false));
     });
 };
