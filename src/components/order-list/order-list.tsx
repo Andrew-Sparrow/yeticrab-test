@@ -23,6 +23,7 @@ const INITIAL_PAGE_NUMBER = 0;
 
 interface OrderListProps {
   orders: IOrder[];
+  activeTabName: string;
 };
 
 const OrdersList: FC<OrderListProps>= (props) => {
@@ -36,7 +37,6 @@ const OrdersList: FC<OrderListProps>= (props) => {
     setSearchResults(orders);
     setPageNumber(INITIAL_PAGE_NUMBER);
   }, [orders]);
-
 
   const activeTabName = useSelector(getActiveTabName);
   const inputSearchElement = useRef<HTMLInputElement>(null);
@@ -72,7 +72,6 @@ const OrdersList: FC<OrderListProps>= (props) => {
   };
 
   const pageNumberClickHandler = (dataPagination: any) => {
-    console.log(dataPagination);
     setPageNumber(dataPagination.selected);
   };
 
@@ -93,7 +92,7 @@ const OrdersList: FC<OrderListProps>= (props) => {
             company={order.company}
             date={order.date}
             carrierFirstName={order.carrier_first_name}
-            carrierMiddleName={order.carrier_first_name}
+            carrierMiddleName={order.carrier_middle_name}
             carrierLastName={order.carrier_last_name}
             favorite={order.favorite}
             phone={order.phone}

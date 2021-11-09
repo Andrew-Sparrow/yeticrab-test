@@ -49,7 +49,7 @@ const NewOrderForm = () => {
     evt.preventDefault();
     const formErrorsValidation = isFormValid();
     setFormErrors(formErrorsValidation);
-    if (Object.keys(formErrorsValidation).length === 0) {
+    if (formErrorsValidation.company === '' && formErrorsValidation.ati === '') {
       dispatch(editOrderApi(formData, id));
     }
   };

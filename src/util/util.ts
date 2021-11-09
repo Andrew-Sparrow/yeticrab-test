@@ -1,59 +1,52 @@
-import nanoid from 'nanoid';
+import { IOrder } from '../types/types';
 import {groupNames} from '../const';
+const nanoid = require('nanoid');
 
 const Util = {
-  getFilteredOrders (activeGroup, orders) {
-    let filteredItems = [];
-    if (activeGroup === groupNames.ALL) {
-      return orders;
-    }
-    filteredItems = orders.filter((item) => item.group === activeGroup);
-    return filteredItems;
-  },
-
-  getFavoritesOrders(activeGroup, orders) {
+  getFavoritesOrders(activeGroup: string, orders: IOrder[]) {
     let favoritesOrders = [];
+
     if (activeGroup === groupNames.ALL) {
       return orders;
     }
-    favoritesOrders = orders.filter((item) => item.favorite === true);
+    favoritesOrders = orders.filter((item: any) => item.favorite === true);
     return favoritesOrders;
   },
 
-  formatDate (dateString) {
-    const DATE_OPTIONS = {year: 'numeric', month: 'short'};
+  formatDate (dateString: string) {
+    const DATE_OPTIONS = {year: 'numeric', month: 'short'} as const;
 
     return (new Date(dateString)).toLocaleDateString('en-US', DATE_OPTIONS);
   },
 
-  generateIdKeys(listLength) {
+  generateIdKeys(listLength: number) {
     const list = new Array(listLength).fill('');
     const generatedIdList = list.map(() => nanoid(10));
     return generatedIdList;
   },
 
-  getUpdatedOrders(id, orders, favorite) {
+  getUpdatedOrders(id: number, orders: IOrder[], favorite: boolean = false) {
     const newOrders = [...orders];
     const index = newOrders.findIndex((order) => order.id === id);
     newOrders[index].favorite = favorite;
     return newOrders;
   },
 
-  getEditedOrders(updatedOrder, orders) {
+  getEditedOrders(updatedOrder: IOrder, orders: any) {
     const newOrders = [...orders];
     const index = newOrders.findIndex((order) => order.id === updatedOrder.id);
     newOrders[index] = updatedOrder;
     return newOrders;
   },
 
-  deleteItem(id, items) {
+  deleteItem(id: number, items: any) {
     const newItems = [...items];
     const index = newItems.findIndex((item) => item.id === id);
     newItems.splice(index, 1);
     return newItems;
   },
 
-  addNewItem(newItem, items) {
+  addNewItem(newItem: any, items: any) {
     const newItems = [...items];
     newItems.push(newItem);
     return newItems;

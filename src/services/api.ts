@@ -11,7 +11,9 @@ export const getAxiosInstance = () => {
 
   axiosInstance.defaults.headers.post['Content-Type'] = 'application/json';
 
-  const onSuccess = (response) => response;
+  const onSuccess = (response: any) => {
+    return response;
+  };
 
   const onFail = () => {};
 

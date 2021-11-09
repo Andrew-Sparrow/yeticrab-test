@@ -84,7 +84,6 @@ export const editOrderApi = (order, id) => (dispatch, _getState, api) => {
     "favorite": order.favorite
   })
     .then((info) => {
-      console.log(info.data)
       dispatch(editOrderAction(info.data));
       dispatch(changeLoadingFormProcessStatus(false));
       // dispatch(showErrorCommentFormMessage(false));
