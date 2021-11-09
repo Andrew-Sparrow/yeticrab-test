@@ -7,7 +7,15 @@ import {
   showErrorFormMessage
 } from '../actions';
 
-const initialState = {
+interface FormState {
+  isFormSending: boolean;
+  isFormSendedSuccessfully: boolean | null;
+  isFormEditedSuccessfully: boolean | null;
+  isShowFormErrorMessage: boolean;
+  formErrorMessage: string | null;
+};
+
+const initialState: FormState = {
   isFormSending: false,
   isFormSendedSuccessfully: null,
   isFormEditedSuccessfully: null,

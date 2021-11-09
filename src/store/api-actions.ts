@@ -10,33 +10,38 @@ import {
   editOrderAction
 } from './actions';
 
-import {APIRoute, AppRoute} from '../const';
+import {AxiosError} from 'axios';
 
-export const fetchOrdersList = () => (dispatch, _getState, api) => (
+import { AppDispatch } from '..';
+
+import {APIRoute, AppRoute} from '../const';
+import {IEditOrderFormData} from '../types/types';
+
+export const fetchOrdersList = () => (dispatch: AppDispatch, _getState: any, api: any) => (
   api.get(APIRoute.ORDERS)
-    .then(({data}) => {
+    .then(({data}: any) => {
       dispatch(loadOrdersAction(data));
     })
-    .catch((err) => {})
+    .catch((err: AxiosError| Error ) => {})
 );
 
-export const addToFavoriteApi = (id, isFavorite) => (dispatch, _getState, api) => (
+export const addToFavoriteApi = (id: number, isFavorite: boolean) => (dispatch: AppDispatch, _getState: any, api: any) => (
   api.patch(`${ APIRoute.ORDERS }/${ id }`, {favorite: isFavorite})
-    .then((info) => {
+    .then((info: any) => {
       dispatch(changeFavoriteAction(id, info.data.favorite));
     })
-    .catch((err) => {})
+    .catch((err: AxiosError | Error) => {})
 );
 
-export const deleteItemApi = (id) => (dispatch, _getState, api) => (
+export const deleteItemApi = (id: number) => (dispatch: AppDispatch, _getState: any, api: any) => (
   api.delete(`${ APIRoute.ORDERS }/${id}`)
-    .then((info) => {
+    .then(() => {
       dispatch(deleteItemAction(id));
     })
-    .catch((err) => {})
+    .catch((err: AxiosError | Error) => {})
 );
 
-export const addNewOrderApi = (order) => (dispatch, _getState, api) => {
+export const addNewOrderApi = (order: IEditOrderFormData) => (dispatch: AppDispatch, _getState: any, api: any) => {
   dispatch(changeLoadingFormProcessStatus(true));
   api.post(`${ APIRoute.ORDERS }`, {
     "company": order.company,
@@ -49,7 +54,7 @@ export const addNewOrderApi = (order) => (dispatch, _getState, api) => {
     "ati": order.ati,
     "favorite": order.favorite
   })
-    .then((info) => {
+    .then((info: any) => {
       dispatch(addNewOrderAction(info.data));
       dispatch(changeLoadingFormProcessStatus(false));
       dispatch(changeIsFormSendedSuccessfullyStatus(true));
@@ -61,11 +66,11 @@ export const addNewOrderApi = (order) => (dispatch, _getState, api) => {
        */
       dispatch(redirectToRoute(AppRoute.MAIN));
     })
-    .catch((err) => {
+    .catch((err: AxiosError | Error) => {
     });
 };
 
-export const editOrderApi = (order, id) => (dispatch, _getState, api) => {
+export const editOrderApi = (order: IEditOrderFormData, id: string) => (dispatch: AppDispatch, _getState: any, api: any) => {
   dispatch(changeLoadingFormProcessStatus(true));
   api.patch(`${ APIRoute.ORDERS }/${ id }`, {
     "company": order.company,
@@ -78,7 +83,7 @@ export const editOrderApi = (order, id) => (dispatch, _getState, api) => {
     "ati": order.ati,
     "favorite": order.favorite
   })
-    .then((info) => {
+    .then((info: any) => {
       dispatch(editOrderAction(info.data));
       dispatch(changeLoadingFormProcessStatus(false));
       dispatch(changeIsFormEditedSuccessfullyStatus(true));
@@ -90,6 +95,6 @@ export const editOrderApi = (order, id) => (dispatch, _getState, api) => {
        */
       dispatch(redirectToRoute(AppRoute.MAIN));
     })
-    .catch((err) => {
+    .catch((err: AxiosError | Error) => {
     });
 };
