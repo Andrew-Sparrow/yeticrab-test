@@ -30,7 +30,9 @@ export const addToFavoriteApi = (id: number, isFavorite: boolean) => (dispatch: 
     .then((info: any) => {
       dispatch(changeFavoriteAction(id, info.data.favorite));
     })
-    .catch((err: AxiosError | Error) => {})
+    .catch((err: AxiosError | Error) => {
+      dispatch(changeLoadingFormProcessStatus(false));
+    })
 );
 
 export const deleteItemApi = (id: number) => (dispatch: AppDispatch, _getState: any, api: AxiosInstance) => (
@@ -38,7 +40,9 @@ export const deleteItemApi = (id: number) => (dispatch: AppDispatch, _getState: 
     .then(() => {
       dispatch(deleteItemAction(id));
     })
-    .catch((err: AxiosError | Error) => {})
+    .catch((err: AxiosError | Error) => {
+      dispatch(changeLoadingFormProcessStatus(false));
+    })
 );
 
 export const addNewOrderApi = (order: IEditOrderFormData) => (dispatch: AppDispatch, _getState: any, api: AxiosInstance) => {
@@ -67,6 +71,7 @@ export const addNewOrderApi = (order: IEditOrderFormData) => (dispatch: AppDispa
       dispatch(redirectToRoute(AppRoute.MAIN));
     })
     .catch((err: AxiosError | Error) => {
+      dispatch(changeLoadingFormProcessStatus(false));
     });
 };
 
@@ -96,5 +101,6 @@ export const editOrderApi = (order: IEditOrderFormData, id: string) => (dispatch
       dispatch(redirectToRoute(AppRoute.MAIN));
     })
     .catch((err: AxiosError | Error) => {
+      dispatch(changeLoadingFormProcessStatus(false));
     });
 };
