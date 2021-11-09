@@ -7,7 +7,11 @@ export const NameSpace = {
   FORM: 'FORM',
 };
 
-export default combineReducers({
+ const rootReducer = combineReducers({
   [NameSpace.ORDERS]: orders,
   [NameSpace.FORM]: form,
-});
+ });
+
+export type RootState = ReturnType<typeof rootReducer>;
+
+export {rootReducer};

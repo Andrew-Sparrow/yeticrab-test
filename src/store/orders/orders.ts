@@ -11,20 +11,20 @@ import {
   editOrderAction,
 } from '../actions';
 
-interface orderState {
+interface OrderState {
   orders: IOrder[],
   isDataLoaded: boolean,
   activeTabName: string,
 };
 
-const initialState: orderState = {
+const initialState: OrderState = {
   orders: [],
   isDataLoaded: false,
   activeTabName: 'All',
 };
 
 
-const orders = createReducer(initialState, (builder) => {
+const orders = createReducer<OrderState>(initialState, (builder) => {
   builder
     .addCase(changeTab, (state, action) => {
       state.activeTabName = action.payload;
@@ -45,6 +45,9 @@ const orders = createReducer(initialState, (builder) => {
     })
     .addCase(editOrderAction, (state, action) => {
       state.orders = Util.getEditedOrders(action.payload, state.orders);
+    })
+    .addDefaultCase((state) => {
+      return state;
     })
 });
 
