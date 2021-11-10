@@ -5,7 +5,7 @@ import {
   FC
 } from 'react';
 
-import {useSelector} from 'react-redux';
+import {useTypedSelector} from '../../hooks/useTypedSelector';
 
 import {Fragment} from 'react';
 
@@ -38,7 +38,7 @@ const OrdersList: FC<OrderListProps>= (props) => {
     setPageNumber(INITIAL_PAGE_NUMBER);
   }, [orders]);
 
-  const activeTabName = useSelector(getActiveTabName);
+  const activeTabName = useTypedSelector(getActiveTabName);
   const inputSearchElement = useRef<HTMLInputElement>(null);
 
   const getDisplayedItemsOnPage = (items: any, pageNumber: number) => {
