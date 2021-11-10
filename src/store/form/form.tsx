@@ -28,7 +28,7 @@ const initialState: FormState = {
   formErrorMessage: null,
 };
 
-const form = createReducer(initialState, (builder) => {
+const formReducer = createReducer(initialState, (builder) => {
   builder
     .addCase(changeLoadingFormProcessStatus, (state: FormState, action: IFormChangeLoadingFormProcessStatus) => {
       state.isFormSending = action.payload;
@@ -45,4 +45,4 @@ const form = createReducer(initialState, (builder) => {
     });
 });
 
-export {form};
+export {formReducer};

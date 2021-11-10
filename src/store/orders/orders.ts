@@ -31,7 +31,7 @@ const initialState: OrderState = {
   activeTabName: 'All',
 };
 
-const orders = createReducer<OrderState>(initialState, (builder) => {
+const ordersReducer = createReducer<OrderState>(initialState, (builder) => {
   builder
     .addCase(changeTab, (state: OrderState, action: IChangeTabAction) => {
       state.activeTabName = action.payload;
@@ -58,4 +58,4 @@ const orders = createReducer<OrderState>(initialState, (builder) => {
     })
 });
 
-export {orders};
+export {ordersReducer};

@@ -1,16 +1,16 @@
 import {combineReducers} from 'redux';
-import {orders} from './orders/orders';
-import {form} from './form/form';
+import {ordersReducer} from './orders/orders';
+import {formReducer} from './form/form';
 
 export const NameSpace = {
   ORDERS: 'ORDERS',
   FORM: 'FORM',
 };
 
- const rootReducer = combineReducers({
-  [NameSpace.ORDERS]: orders,
-  [NameSpace.FORM]: form,
- });
+const rootReducer = combineReducers({
+  [NameSpace.ORDERS]: ordersReducer,
+  [NameSpace.FORM]: formReducer,
+});
 
 export type RootState = ReturnType<typeof rootReducer>;
 
