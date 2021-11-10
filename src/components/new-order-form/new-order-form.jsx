@@ -1,6 +1,7 @@
-import React, {useState} from 'react';
+import {useState} from 'react';
 import {useDispatch} from 'react-redux';
-import {useSelector} from 'react-redux';
+import {useTypedSelector} from '../../hooks/useTypedSelector';
+
 import {getIsFormSending} from '../../store/form/selectors';
 
 import withLayout from '../hocs/with-layout';
@@ -31,7 +32,7 @@ const NewOrderForm = () => {
     ati: null
   });
 
-  const isFormLoading = useSelector(getIsFormSending);
+  const isFormLoading = useTypedSelector(getIsFormSending);
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
