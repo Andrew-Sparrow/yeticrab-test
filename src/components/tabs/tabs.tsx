@@ -1,13 +1,14 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import {useSelector, useDispatch} from 'react-redux';
+import {useDispatch} from 'react-redux';
 
 import {groupList} from '../../const';
 import {changeTab} from '../../store/actions';
 import {getActiveTabName} from '../../store/orders/selectors';
+import {useTypedSelector} from '../../hooks/useTypedSelector';
 
 function Tabs() {
-  const activeTabName = useSelector(getActiveTabName);
+  const activeTabName = useTypedSelector(getActiveTabName);
   const dispatch = useDispatch();
 
   const handleTabClick = (evt: React.MouseEvent) => {
