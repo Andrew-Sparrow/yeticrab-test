@@ -55,3 +55,26 @@ export interface IChangeFavoriteAction {
     favorite: boolean;
   };
 }
+
+export interface IFormChangeLoadingFormProcessStatus {
+  type: string;
+  payload: boolean;
+};
+
+export interface IFormChangeIsFormSendedSuccessfullyStatus {
+  type: string;
+  payload: boolean;
+};
+
+export interface IFormChangeIsFormEditedSuccessfullyStatus {
+  type: string;
+  payload: boolean;
+};
+
+export interface IFormShowErrorFormMessage {
+  type: string;
+  payload: {
+    isShowErrorMessage: boolean;
+    errorMessageText: string;
+  };
+};

@@ -31,8 +31,6 @@ const initialState: OrderState = {
   activeTabName: 'All',
 };
 
-
-
 const orders = createReducer<OrderState>(initialState, (builder) => {
   builder
     .addCase(changeTab, (state: OrderState, action: IChangeTabAction) => {
