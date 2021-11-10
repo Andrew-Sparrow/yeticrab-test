@@ -4,20 +4,28 @@ import OrdersList from '../order-list/order-list';
 import withLayout from '../hocs/with-layout';
 import Tabs from '../tabs/tabs';
 import NewItemButton from '../new-item-button/new-item-button';
+import ErrorMessage from '../error-message/error-message';
 
 import Util from '../../util/util';
 import MainEmpty from '../main-empty/main-empty';
 import {getOrders, getActiveTabName} from '../../store/orders/selectors';
-import {getIsFormSendedSuccessfully} from '../../store/form/selectors';
-import { getIsFormEditedSuccessfully } from '../../store/form/selectors';
+
+import {
+  getIsFormEditedSuccessfully,
+  getIsFormSendedSuccessfully,
+  getIsShowFormErrorMessage
+} from '../../store/form/selectors';
+
 import SuccessMessage from '../success-message/success-message';
 import SuccessMessageEdit from '../success-message-edit/success-message-edit';
 
 function Main() {
   const activeGroupName = useTypedSelector(getActiveTabName);
   const orders = useTypedSelector(getOrders);
+
   const isFormSuccessfullySended = useTypedSelector(getIsFormSendedSuccessfully);
   const isFormSuccessfullyEdited = useTypedSelector(getIsFormEditedSuccessfully);
+  const isShowFormErrorMessage = useTypedSelector(getIsShowFormErrorMessage);
 
   const filteredOrders = Util.getFavoritesOrders(activeGroupName, orders);
 
@@ -27,6 +35,8 @@ function Main() {
       <Tabs />
       {isFormSuccessfullySended ? <SuccessMessage /> : ''}
       {isFormSuccessfullyEdited ? <SuccessMessageEdit /> : ''}
+      {isFormSuccessfullyEdited ? <SuccessMessageEdit /> : ''}
+      {isShowFormErrorMessage ? <ErrorMessage /> : ''}
       {
         filteredOrders.length === 0
           ? <MainEmpty activeGroupName={activeGroupName}/>

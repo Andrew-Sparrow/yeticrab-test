@@ -2203,6 +2203,11 @@ img {
   transition: all 250ms linear 2s;
 }
 
+.order__message--error {
+  color: #be2e0a;
+  border: 1px solid #be0a0a;
+}
+
 .search {
   width: 100%;
   padding: 20px;
