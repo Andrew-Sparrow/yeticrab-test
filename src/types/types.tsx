@@ -61,6 +61,11 @@ export interface IFormChangeLoadingFormProcessStatus {
   payload: boolean;
 };
 
+export interface IIsOrdersLoadedStatus {
+  type: string;
+  payload: boolean;
+};
+
 export interface IFormChangeIsFormSendedSuccessfullyStatus {
   type: string;
   payload: boolean;

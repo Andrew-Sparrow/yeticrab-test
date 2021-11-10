@@ -7,6 +7,7 @@ export const ActionType = {
   DELETE_ITEM: 'orders/delete',
   LOAD_NEW_ORDER: 'orders/loadNewOrder',
   EDIT_ORDER: 'orders/editOrder',
+  IS_ORDERS_LOADED: 'orders/isOrdersLoadedOrder',
   REDIRECT_TO_ROUTE: 'orders/redirectToRoute',
 
   CHANGE_LOADING_FORM_PROCESS_STATUS: 'form/changeLoadingFormProcessStatus',
@@ -28,6 +29,11 @@ export const changePageNumber = createAction(
 export const changeLoadingFormProcessStatus = createAction(
   ActionType.CHANGE_LOADING_FORM_PROCESS_STATUS,
   (isLoading) => ({payload: isLoading}),
+);
+
+export const changeIsOrdersLoadedStatus = createAction(
+  ActionType.IS_ORDERS_LOADED,
+  (isLoaded) => ({payload: isLoaded}),
 );
 
 export const changeIsFormSendedSuccessfullyStatus = createAction(

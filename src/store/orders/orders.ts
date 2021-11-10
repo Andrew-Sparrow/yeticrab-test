@@ -7,7 +7,8 @@ import {
   IDeleteItemAction,
   IChangeFavoriteAction,
   ILoadOrdersAction,
-  IEditOrderAction
+  IEditOrderAction,
+  IIsOrdersLoadedStatus
 } from '../../types/types';
 
 import {
@@ -17,17 +18,18 @@ import {
   changeFavoriteAction,
   deleteItemAction,
   editOrderAction,
+  changeIsOrdersLoadedStatus
 } from '../actions';
 
 interface OrderState {
   orders: IOrder[],
-  isDataLoaded: boolean,
+  isOrdersLoaded: boolean,
   activeTabName: string,
 };
 
 const initialState: OrderState = {
   orders: [],
-  isDataLoaded: false,
+  isOrdersLoaded: false,
   activeTabName: 'All',
 };
 
@@ -38,7 +40,10 @@ const ordersReducer = createReducer<OrderState>(initialState, (builder) => {
     })
     .addCase(loadOrdersAction, (state: OrderState, action: ILoadOrdersAction) => {
       state.orders = action.payload;
-      state.isDataLoaded = true;
+      state.isOrdersLoaded = true;
+    })
+    .addCase(changeIsOrdersLoadedStatus, (state: OrderState, action: IIsOrdersLoadedStatus) => {
+      state.isOrdersLoaded = action.payload;
     })
     .addCase(changeFavoriteAction, (state: OrderState, action: IChangeFavoriteAction) => {
       state.orders = Util.getUpdatedOrders(action.payload.id, state.orders, action.payload.favorite);

@@ -6,14 +6,14 @@ import {AppRoute} from '../../const';
 import Main from '../main/main';
 import Error from '../not-found/not-found';
 import LoadingScreen from '../loading-screen/loading-screen';
-import {getIsDataLoaded} from '../../store/orders/selectors';
+import {getIsOrdersLoaded} from '../../store/orders/selectors';
 import NewOrderForm from '../new-order-form/new-order-form';
 import EditOrderForm from '../edit-order-form/edit-order-form';
 
 function App () {
-  const isDataLoaded = useTypedSelector(getIsDataLoaded);
+  const isOrdersLoaded = useTypedSelector(getIsOrdersLoaded);
 
-  if (!isDataLoaded) {
+  if (!isOrdersLoaded) {
     return (
       <LoadingScreen />
     );

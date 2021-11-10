@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, {AxiosError} from 'axios';
 
 const BACKEND_URL = 'https://heroku-yeticrab-api.herokuapp.com';
 const REQUEST_TIMEOUT = 5000;
@@ -15,7 +15,9 @@ export const getAxiosInstance = () => {
     return response;
   };
 
-  const onFail = () => {};
+  const onFail = (err: AxiosError | Error) => {
+    return Promise.reject(err);
+  };
 
   axiosInstance.interceptors.response.use(onSuccess, onFail);
 

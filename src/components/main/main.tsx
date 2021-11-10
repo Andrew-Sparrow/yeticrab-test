@@ -35,7 +35,6 @@ function Main() {
       <Tabs />
       {isFormSuccessfullySended ? <SuccessMessage /> : ''}
       {isFormSuccessfullyEdited ? <SuccessMessageEdit /> : ''}
-      {isFormSuccessfullyEdited ? <SuccessMessageEdit /> : ''}
       {isShowFormErrorMessage ? <ErrorMessage /> : ''}
       {
         filteredOrders.length === 0

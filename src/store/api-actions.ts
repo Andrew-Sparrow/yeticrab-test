@@ -8,7 +8,8 @@ import {
   changeIsFormSendedSuccessfullyStatus,
   changeIsFormEditedSuccessfullyStatus,
   editOrderAction,
-  showErrorFormMessage
+  showErrorFormMessage,
+  changeIsOrdersLoadedStatus
 } from './actions';
 
 import {AxiosError, AxiosInstance} from 'axios';
@@ -24,7 +25,9 @@ export const fetchOrdersList = () => (dispatch: AppDispatch, _getState: any, api
       }, 500);
     })
     .catch((err: AxiosError | Error) => {
+      dispatch(changeIsOrdersLoadedStatus(true));
       dispatch(changeLoadingFormProcessStatus(false));
+      dispatch(changeIsFormSendedSuccessfullyStatus(false));
       dispatch(showErrorFormMessage(true, err.message));
     })
 );
@@ -37,6 +40,7 @@ export const addToFavoriteApi = (id: number, isFavorite: boolean) => (dispatch: 
     .catch((err: AxiosError | Error) => {
       dispatch(changeLoadingFormProcessStatus(false));
       dispatch(showErrorFormMessage(true, err.message));
+      setTimeout(() => dispatch(showErrorFormMessage(false, err.message)), 3000);
     })
 );
 
@@ -48,6 +52,8 @@ export const deleteItemApi = (id: number) => (dispatch: AppDispatch, _getState: 
     .catch((err: AxiosError | Error) => {
       dispatch(changeLoadingFormProcessStatus(false));
       dispatch(showErrorFormMessage(true, err.message));
+      dispatch(redirectToRoute(AppRoute.MAIN));
+      setTimeout(() => dispatch(showErrorFormMessage(false, err.message)), 3000);
     })
 );
 
@@ -68,7 +74,7 @@ export const addNewOrderApi = (order: IEditOrderFormData) => (dispatch: AppDispa
       dispatch(addNewOrderAction(info.data));
       dispatch(changeLoadingFormProcessStatus(false));
       dispatch(changeIsFormSendedSuccessfullyStatus(true));
-      setTimeout(() => dispatch(changeIsFormSendedSuccessfullyStatus(true)), 3000);
+      setTimeout(() => dispatch(changeIsFormSendedSuccessfullyStatus(false)), 3000);
       /*
       this additional bottom line was made for clean up a comment form
       and establish "isCommentFormSendedSuccessfully" to "false"
@@ -78,8 +84,11 @@ export const addNewOrderApi = (order: IEditOrderFormData) => (dispatch: AppDispa
     })
     .catch((err: AxiosError | Error) => {
       dispatch(changeLoadingFormProcessStatus(false));
+      dispatch(changeIsFormSendedSuccessfullyStatus(true));
       dispatch(changeIsFormSendedSuccessfullyStatus(false));
       dispatch(showErrorFormMessage(true, err.message));
+      dispatch(redirectToRoute(AppRoute.MAIN));
+      setTimeout(() => dispatch(showErrorFormMessage(true, err.message)), 3000);
     });
 };
 
@@ -110,7 +119,10 @@ export const editOrderApi = (order: IEditOrderFormData, id: string) => (dispatch
     })
     .catch((err: AxiosError | Error) => {
       dispatch(changeLoadingFormProcessStatus(false));
+      dispatch(changeIsFormEditedSuccessfullyStatus(true));
       dispatch(changeIsFormEditedSuccessfullyStatus(false));
       dispatch(showErrorFormMessage(true, err.message));
+      dispatch(redirectToRoute(AppRoute.MAIN));
+      setTimeout(() => dispatch(showErrorFormMessage(true, err.message)), 3000);
     });
 };
