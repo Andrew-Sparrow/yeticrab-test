@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {useDispatch} from 'react-redux';
-import {useSelector} from 'react-redux';
+// import {useSelector} from 'react-redux';
+import {useTypedSelector} from '../../hooks/useTypedSelector';
 import {getIsFormSending} from '../../store/form/selectors';
 import {useParams} from 'react-router-dom';
 import { getOrders } from '../../store/orders/selectors';
@@ -23,7 +24,7 @@ const NewOrderForm = () => {
   const dispatch = useDispatch();
   const {id} = useParams<NewOrderFormProps>();
 
-  const orders = useSelector(getOrders);
+  const orders = useTypedSelector(getOrders);
   const order = orders.find((order: IOrder) => order.id === +id);
 
   const [formData, setFormData] = useState<IEditOrderFormData>({
@@ -43,7 +44,7 @@ const NewOrderForm = () => {
     ati: ''
   });
 
-  const isFormLoading = useSelector(getIsFormSending);
+  const isFormLoading = useTypedSelector(getIsFormSending);
 
   const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
