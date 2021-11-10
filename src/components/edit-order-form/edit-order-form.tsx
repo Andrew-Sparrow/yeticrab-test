@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {useDispatch} from 'react-redux';
-// import {useSelector} from 'react-redux';
 import {useTypedSelector} from '../../hooks/useTypedSelector';
 import {getIsFormSending} from '../../store/form/selectors';
 import {useParams} from 'react-router-dom';

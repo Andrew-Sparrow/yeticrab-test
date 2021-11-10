@@ -1,5 +1,4 @@
-import React from 'react';
-import {useSelector} from 'react-redux';
+import {useTypedSelector} from '../../hooks/useTypedSelector';
 
 import OrdersList from '../order-list/order-list';
 import withLayout from '../hocs/with-layout';
@@ -15,10 +14,10 @@ import SuccessMessage from '../success-message/success-message';
 import SuccessMessageEdit from '../success-message-edit/success-message-edit';
 
 function Main() {
-  const activeGroupName = useSelector(getActiveTabName);
-  const orders = useSelector(getOrders);
-  const isFormSuccessfullySended = useSelector(getIsFormSendedSuccessfully);
-  const isFormSuccessfullyEdited = useSelector(getIsFormEditedSuccessfully);
+  const activeGroupName = useTypedSelector(getActiveTabName);
+  const orders = useTypedSelector(getOrders);
+  const isFormSuccessfullySended = useTypedSelector(getIsFormSendedSuccessfully);
+  const isFormSuccessfullyEdited = useTypedSelector(getIsFormEditedSuccessfully);
 
   const filteredOrders = Util.getFavoritesOrders(activeGroupName, orders);
 
