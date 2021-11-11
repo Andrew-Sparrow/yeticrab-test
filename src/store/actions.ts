@@ -1,4 +1,5 @@
 import {createAction} from '@reduxjs/toolkit';
+import {IOrder} from '../types/types';
 
 export const ActionType = {
   CHANGE_GROUP: 'orders/changeGroup',

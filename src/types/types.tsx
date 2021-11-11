@@ -11,6 +11,20 @@ export interface IOrder {
   favorite: boolean;
 }
 
+export interface IFormState {
+  isFormSending: boolean;
+  isFormSendedSuccessfully: boolean | null;
+  isFormEditedSuccessfully: boolean | null;
+  isShowFormErrorMessage: boolean;
+  formErrorMessage: string | null;
+};
+
+export interface IOrderState {
+  orders: IOrder[],
+  isOrdersLoaded: boolean,
+  activeTabName: string,
+};
+
 export interface IEditOrderFormData {
   company: string;
   date: string;
