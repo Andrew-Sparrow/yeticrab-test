@@ -1,6 +1,10 @@
 import axios, {AxiosError} from 'axios';
 
-const BACKEND_URL = 'https://heroku-yeticrab-api.herokuapp.com';
+// former place for Data Base
+// const BACKEND_URL = 'https://heroku-yeticrab-api.herokuapp.com';
+
+const BACKEND_URL = 'http://localhost:4000/';
+
 const REQUEST_TIMEOUT = 5000;
 
 export const getAxiosInstance = () => {
